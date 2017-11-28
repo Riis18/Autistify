@@ -1,5 +1,15 @@
 *.class
 
+### NetBeans ###
+*/nbproject/private/
+*/build/
+*/nbbuild/
+*/dist/
+*/nbdist/
+*/.nb-gradle/
+
+# End of https://www.gitignore.io/api/java,netbeans
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
