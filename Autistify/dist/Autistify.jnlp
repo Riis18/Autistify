@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Autistify.jar" size="6579" download="eager" />
+    <jar href="Autistify.jar" size="7332" download="eager" />
     <jar href="lib\jfoenix.jar" size="2414497" download="eager" />
     <jar href="lib\sqljdbc42.jar" size="653996" download="eager" />
   </resources>
