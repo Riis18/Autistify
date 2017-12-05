@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="289.0" prefWidth="607.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="autistify.gui.controller.AddSongViewController">
+<AnchorPane id="AnchorPane" prefHeight="289.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autistify.gui.controller.AddSongViewController">
    <children>
       <AnchorPane layoutX="-1.0" prefHeight="292.0" prefWidth="608.0" style="-fx-background-color: GREY; -fx-background-radius: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;?import javafx.scene.control.Label?&gt;&lt;?import javafx.scene.layout.Pane?&gt;&lt;?import javafx.scene.text.Font?&gt;&lt;Pane layoutX=&quot;-1.0&quot; layoutY=&quot;1.0&quot; prefHeight=&quot;25.0&quot; prefWidth=&quot;856.0&quot; style=&quot;-fx-background-color: #919393; -fx-background-radius: 0.5em;&quot; xmlns=&quot;http://javafx.com/javafx/9.0.1&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot;&gt;   &lt;children&gt;      &lt;Label alignment=&quot;CENTER&quot; layoutX=&quot;231.0&quot; layoutY=&quot;4.0&quot; prefHeight=&quot;17.0&quot; prefWidth=&quot;394.0&quot; text=&quot;Autistify&quot;&gt;         &lt;font&gt;            &lt;Font name=&quot;Rockwell Extra Bold&quot; size=&quot;12.0&quot; /&gt;         &lt;/font&gt;      &lt;/Label&gt;   &lt;/children&gt;&lt;/Pane&gt;;">
          <children>
@@ -72,7 +71,7 @@
                </children>
             </Pane>
             <Button layoutX="467.0" layoutY="188.0" mnemonicParsing="false" text="Choose" />
-            <Button layoutX="475.0" layoutY="253.0" mnemonicParsing="false" text="New" />
+            <Button layoutX="475.0" layoutY="253.0" mnemonicParsing="false" text="Save" />
             <Button layoutX="533.0" layoutY="253.0" mnemonicParsing="false" text="Cancel" />
          </children>
       </AnchorPane>
