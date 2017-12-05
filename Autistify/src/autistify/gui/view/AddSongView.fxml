@@ -21,9 +21,9 @@
                </children>
             </Pane>
             <TextField layoutX="229.0" layoutY="64.0" prefHeight="25.0" prefWidth="230.0" />
-            <TextField layoutX="229.0" layoutY="157.0" prefHeight="25.0" prefWidth="230.0" />
-            <TextField layoutX="229.0" layoutY="126.0" prefHeight="25.0" prefWidth="230.0" />
             <TextField layoutX="229.0" layoutY="95.0" prefHeight="25.0" prefWidth="230.0" />
+            <TextField layoutX="229.0" layoutY="126.0" prefHeight="25.0" prefWidth="230.0" />
+            <TextField layoutX="229.0" layoutY="157.0" prefHeight="25.0" prefWidth="230.0" />
             <TextField layoutX="230.0" layoutY="188.0" prefHeight="25.0" prefWidth="230.0" />
             <Pane layoutY="64.0" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #919393; -fx-background-radius: 0.5em;">
                <children>
