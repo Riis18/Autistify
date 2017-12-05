@@ -15,16 +15,29 @@ public class Song {
        public String album;
        public String artist;
        public String path;
-       private int trackLenght;
-       
+       public int trackLenght;
+       private int id;
 
-    public Song(String name, String album, String artist, String path, int trackLenght) {
+    public Song(int id,String name, String album, String artist, String path, int trackLenght) {
+        
+        this.id = id;
         this.name = name;
         this.album = album;
         this.artist = artist;
         this.path = path;
         this.trackLenght = trackLenght;
+       
     }
+    
+        /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public int getId() {
+        return id;
+    }
+
 
     /**
      * Get the value of trackLenght

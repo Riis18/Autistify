@@ -14,11 +14,11 @@ import java.sql.Connection;
  *
  * @author Jesper Riis
  */
-public class DataBaseConnecter {
+public class DataBaseConnector {
     
     private SQLServerDataSource dataSource;
 
-    public DataBaseConnecter() throws IOException
+    public DataBaseConnector() throws IOException
     {
         dataSource = new SQLServerDataSource();
 
@@ -26,7 +26,7 @@ public class DataBaseConnecter {
         dataSource.setPortNumber(1433);
         dataSource.setDatabaseName("Autistify");
         dataSource.setUser("CS2017A_15");
-        dataSource.setPassword("1234");
+        dataSource.setPassword("Bjoernhart1234");
     }
     
     public Connection getConnection() throws SQLServerException
