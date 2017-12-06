@@ -5,9 +5,9 @@
  */
 package autistify.gui.controller;
 
+import autistify.be.Song;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -16,7 +16,16 @@ import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
+import java.io.File; 
+import java.io.IOException;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 /**
  * FXML Controller class
  *
@@ -39,12 +48,16 @@ public class AddSongViewController implements Initializable {
     @FXML
     private JFXButton cancelBtn;
 
+    
+    
+    private Song song = new Song();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Song song = new Song();
+       
     }    
 
     @FXML
@@ -66,11 +79,39 @@ public class AddSongViewController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             Window stage = null;
             File file = fileChooser.showOpenDialog(stage);
+            
+            
+            AudioFile f;
+            f = AudioFileIO.read(file);
+            Tag t = f.getTagOrCreateAndSetDefault();
+            song.setArtist(t.getFirst(FieldKey.ARTIST));
+            song.setAlbum(t.getFirst(FieldKey.ALBUM));
+            song.setName(t.getFirst(FieldKey.TITLE));
+            song.setGenre(t.getFirst(FieldKey.GENRE));
+            f.commit();
+            txtTitle.setText(song.getName());
+            txtArtist.setText(song.getArtist());
+            txtAlbum.setText(song.getAlbum());
+            txtGenre.setText(song.getGenre());
             txtFilePath.setText(file.getPath());
+             
         } catch (Exception e) {
 
         }
 
     }
     
+//    private void getMetaData() throws InvalidAudioFrameException, CannotReadException, IOException, TagException, ReadOnlyFileException{
+//       
+//       txtFilePath.getText();
+//       AudioFile f;
+//       f = AudioFileIO.read(txtFilePath.getText().);
+//       Tag t = f.getTagOrCreateAndSetDefault();
+//       song.setArtist(t.getFirst(FieldKey.ARTIST));
+//       song.setAlbum(t.getFirst(FieldKey.ALBUM));
+//       song.setName(t.getFirst(FieldKey.TITLE));
+//       song.setGenre(t.getFirst(FieldKey.GENRE));
+//       
+//       
+//    }
 }
