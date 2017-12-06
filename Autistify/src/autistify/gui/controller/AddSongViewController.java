@@ -75,7 +75,7 @@ public class AddSongViewController implements Initializable {
     @FXML
     private void chooseFile(ActionEvent event) {
         
-                try {
+        try {
             FileChooser fileChooser = new FileChooser();
             Window stage = null;
             File file = fileChooser.showOpenDialog(stage);
@@ -84,6 +84,7 @@ public class AddSongViewController implements Initializable {
             AudioFile f;
             f = AudioFileIO.read(file);
             Tag t = f.getTagOrCreateAndSetDefault();
+            song.setTrackLenght(f.getAudioHeader().getTrackLength());
             song.setArtist(t.getFirst(FieldKey.ARTIST));
             song.setAlbum(t.getFirst(FieldKey.ALBUM));
             song.setName(t.getFirst(FieldKey.TITLE));
@@ -93,7 +94,9 @@ public class AddSongViewController implements Initializable {
             txtArtist.setText(song.getArtist());
             txtAlbum.setText(song.getAlbum());
             txtGenre.setText(song.getGenre());
+            txtTime.setText(Integer.toString(song.getTrackLenght()));
             txtFilePath.setText(file.getPath());
+            
              
         } catch (Exception e) {
 
@@ -101,17 +104,4 @@ public class AddSongViewController implements Initializable {
 
     }
     
-//    private void getMetaData() throws InvalidAudioFrameException, CannotReadException, IOException, TagException, ReadOnlyFileException{
-//       
-//       txtFilePath.getText();
-//       AudioFile f;
-//       f = AudioFileIO.read(txtFilePath.getText().);
-//       Tag t = f.getTagOrCreateAndSetDefault();
-//       song.setArtist(t.getFirst(FieldKey.ARTIST));
-//       song.setAlbum(t.getFirst(FieldKey.ALBUM));
-//       song.setName(t.getFirst(FieldKey.TITLE));
-//       song.setGenre(t.getFirst(FieldKey.GENRE));
-//       
-//       
-//    }
 }
