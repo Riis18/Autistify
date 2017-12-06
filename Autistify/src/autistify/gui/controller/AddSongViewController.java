@@ -6,11 +6,14 @@
 package autistify.gui.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -50,6 +53,16 @@ public class AddSongViewController implements Initializable {
 
     @FXML
     private void chooseFile(ActionEvent event) {
+        
+                try {
+            FileChooser fileChooser = new FileChooser();
+            Window stage = null;
+            File file = fileChooser.showOpenDialog(stage);
+            txtFilePath.setText(file.getPath());
+        } catch (Exception e) {
+
+        }
+
     }
     
 }
