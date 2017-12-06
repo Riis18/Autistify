@@ -19,9 +19,15 @@ public class Song {
        public int trackLenght;
        public int id;
 
-    public Song() {
-        
+    public Song(String name, String album, String artist, String path, String genre, int trackLenght) {
+        this.name = name;
+        this.album = album;
+        this.artist = artist;
+        this.path = path;
+        this.genre = genre;
+        this.trackLenght = trackLenght;
     }
+
     
         /**
      * Get the value of id

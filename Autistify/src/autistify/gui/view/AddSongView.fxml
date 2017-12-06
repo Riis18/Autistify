@@ -65,7 +65,7 @@
                   </Label>
                </children>
             </Pane>
-            <JFXButton layoutX="28.0" layoutY="253.0" onAction="#saveSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Save" />
+            <JFXButton fx:id="saveBtn" layoutX="28.0" layoutY="253.0" onAction="#saveSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Save" />
             <JFXButton fx:id="cancelBtn" layoutX="542.0" layoutY="253.0" onAction="#cancelAddSongView" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Cancel" />
             <JFXButton layoutX="468.0" layoutY="207.0" onAction="#chooseFile" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Choose" />
             <JFXTextField fx:id="txtTitle" focusColor="BLACK" layoutX="229.0" layoutY="52.0" prefHeight="25.0" prefWidth="230.0" />

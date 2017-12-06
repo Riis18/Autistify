@@ -6,6 +6,7 @@
 package autistify.gui.controller;
 
 import autistify.be.Song;
+import autistify.gui.model.MainViewModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -29,32 +31,40 @@ import javafx.stage.Stage;
  */
 public class MainViewController implements Initializable {
     
-    private SongDAO sDAO;
     private Song song;
+    private MainViewModel mvm;
     @FXML
-    private TableView<?> songTable;
+    private TableView<Song> songTable;
     @FXML
-    private TableColumn<?, ?> songClmName;
+    private TableColumn<Song, String> songClmName;
     @FXML
-    private TableColumn<?, ?> songClmArtist;
+    private TableColumn<Song, String> songClmArtist;
     @FXML
-    private TableColumn<?, ?> songClmAlbum;
+    private TableColumn<Song, String> songClmAlbum;
     @FXML
-    private TableColumn<?, ?> songClmGenre;
+    private TableColumn<Song, String> songClmGenre;
     @FXML
-    private TableColumn<?, ?> songClmTime;
+    private TableColumn<Song, Integer> songClmTime;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-           
-            sDAO = new SongDAO();
-        } catch (IOException ex) {
-            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        mvm = MainViewModel.getInstance();
+        
+        songTable.setItems(mvm.getSongs());
+        songClmName.setCellValueFactory(
+                new PropertyValueFactory("name"));
+        songClmArtist.setCellValueFactory(
+                new PropertyValueFactory("artist"));
+        songClmAlbum.setCellValueFactory(
+                new PropertyValueFactory("album"));
+        songClmGenre.setCellValueFactory(
+                new PropertyValueFactory("genre"));
+        songClmTime.setCellValueFactory(
+                new PropertyValueFactory("trackLenght"));
     }    
 
     @FXML
