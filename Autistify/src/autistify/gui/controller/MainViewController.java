@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -29,6 +31,18 @@ public class MainViewController implements Initializable {
     
     private SongDAO sDAO;
     private Song song;
+    @FXML
+    private TableView<?> songTable;
+    @FXML
+    private TableColumn<?, ?> songClmName;
+    @FXML
+    private TableColumn<?, ?> songClmArtist;
+    @FXML
+    private TableColumn<?, ?> songClmAlbum;
+    @FXML
+    private TableColumn<?, ?> songClmGenre;
+    @FXML
+    private TableColumn<?, ?> songClmTime;
 
     /**
      * Initializes the controller class.
@@ -44,18 +58,8 @@ public class MainViewController implements Initializable {
     }    
 
     @FXML
-    private void openNewSongView(ActionEvent event) throws IOException {
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-//        AddSongViewController controller = fxmlLoader.getController();
-//        controller.setModel(songmodel);
-//        controller.setManager(playlistManager);
-        Stage stage = new Stage();
-        stage.setTitle("Add Song Window");
-        stage.setScene(new Scene(root1));
-        stage.show();
-        
+    private void openAddSongView(ActionEvent event) {
+            
     }
     
 }

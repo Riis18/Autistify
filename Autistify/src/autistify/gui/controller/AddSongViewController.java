@@ -5,8 +5,11 @@
  */
 package autistify.gui.controller;
 
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -16,6 +19,19 @@ import javafx.fxml.Initializable;
  */
 public class AddSongViewController implements Initializable {
 
+    @FXML
+    private JFXTextField txtTitle;
+    @FXML
+    private JFXTextField txtArtist;
+    @FXML
+    private JFXTextField txtAlbum;
+    @FXML
+    private JFXTextField txtGenre;
+    @FXML
+    private JFXTextField txtTime;
+    @FXML
+    private JFXTextField txtFilePath;
+
     /**
      * Initializes the controller class.
      */
@@ -23,5 +39,17 @@ public class AddSongViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void saveSong(ActionEvent event) {
+    }
+
+    @FXML
+    private void cancelAddSongView(ActionEvent event) {
+    }
+
+    @FXML
+    private void chooseFile(ActionEvent event) {
+    }
     
 }
