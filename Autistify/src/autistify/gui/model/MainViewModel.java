@@ -6,6 +6,8 @@
 package autistify.gui.model;
 
 import autistify.be.Song;
+import autistify.bll.SongManager;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,9 +18,11 @@ import javafx.collections.ObservableList;
 public class MainViewModel {
     
     private static MainViewModel instance;
+    private SongManager sm;
     public ObservableList<Song> songList;
 
-    public MainViewModel() {
+    public MainViewModel() throws IOException {
+        this.sm = new SongManager();
         songList = FXCollections.observableArrayList();
     }
     
@@ -27,10 +31,11 @@ public class MainViewModel {
     }
     
     public void addSong(Song song){
+        sm.add(song);
         songList.add(song);
     }
     
-   public static MainViewModel getInstance()
+   public static MainViewModel getInstance() throws IOException
     {
         if (instance == null)
         {

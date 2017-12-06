@@ -18,6 +18,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import java.io.File; 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
@@ -55,13 +58,24 @@ public class AddSongViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
           
-        mvm = MainViewModel.getInstance();
+        try {
+            mvm = MainViewModel.getInstance();
+        } catch (IOException ex) {
+            Logger.getLogger(AddSongViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     @FXML
     private void saveSong(ActionEvent event) {
         
-        Song song = new Song(txtTitle.getText(), txtAlbum.getText(), txtArtist.getText(), txtFilePath.getText(), txtGenre.getText(), Integer.parseInt(txtTime.getText()));
+        Song song = new Song();//txtTitle.getText(), txtAlbum.getText(), txtArtist.getText(), txtFilePath.getText(), txtGenre.getText(), Integer.parseInt(txtTime.getText()));
+        song.setId(-1);
+        song.setName(txtTitle.getText());
+        song.setAlbum(txtAlbum.getText());
+        song.setArtist(txtArtist.getText());
+        song.setPath(txtFilePath.getText());
+        song.setGenre(txtGenre.getText());
+        song.setTrackLenght(Integer.parseInt(txtTime.getText()));
         mvm.addSong(song);
         
         Stage stage = (Stage) saveBtn.getScene().getWindow();

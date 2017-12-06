@@ -17,25 +17,35 @@ public class Song {
        public String path;
        public String genre;
        public int trackLenght;
-       public int id;
+       private int id;
 
-    public Song(String name, String album, String artist, String path, String genre, int trackLenght) {
-        this.name = name;
-        this.album = album;
-        this.artist = artist;
-        this.path = path;
-        this.genre = genre;
-        this.trackLenght = trackLenght;
+
+    public Song() {//String name, String album, String artist, String path, String genre, int trackLenght) {
+//        
+//        this.name = name;
+//        this.album = album;
+//        this.artist = artist;
+//        this.path = path;
+//        this.genre = genre;
+//        this.trackLenght = trackLenght;
     }
 
-    
-        /**
+    /**
      * Get the value of id
      *
      * @return the value of id
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param id new value of id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
 
@@ -156,5 +166,5 @@ public class Song {
     public String toString() {
         return "Song{" + "name=" + name + ", album=" + album + ", artist=" + artist + ", path=" + path + ", genre=" + genre + ", trackLenght=" + trackLenght + ", id=" + id + '}';
     }
- 
+
 }

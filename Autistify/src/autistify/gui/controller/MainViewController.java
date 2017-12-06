@@ -52,7 +52,11 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        mvm = MainViewModel.getInstance();
+        try {
+            mvm = MainViewModel.getInstance();
+        } catch (IOException ex) {
+            Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         songTable.setItems(mvm.getSongs());
         songClmName.setCellValueFactory(
