@@ -5,6 +5,7 @@
  */
 package autistify.gui.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.net.URL;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 /**
@@ -34,6 +36,8 @@ public class AddSongViewController implements Initializable {
     private JFXTextField txtTime;
     @FXML
     private JFXTextField txtFilePath;
+    @FXML
+    private JFXButton cancelBtn;
 
     /**
      * Initializes the controller class.
@@ -49,6 +53,10 @@ public class AddSongViewController implements Initializable {
 
     @FXML
     private void cancelAddSongView(ActionEvent event) {
+        
+        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+        stage.close();
+        
     }
 
     @FXML
