@@ -58,7 +58,15 @@ public class MainViewController implements Initializable {
     }    
 
     @FXML
-    private void openAddSongView(ActionEvent event) {
+    private void openAddSongView(ActionEvent event) throws IOException {
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        
+        Stage stage = new Stage();
+ 
+        stage.setScene(new Scene(root1));
+        stage.show();
             
     }
     
