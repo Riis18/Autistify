@@ -70,7 +70,7 @@ public class SongDAO {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Song song = new Song();
-                song.setId(rs.getInt("id"));
+                song.setId(rs.getInt("songID"));
                 song.setName(rs.getString("name"));
                 song.setArtist(rs.getString("artist"));
                 song.setAlbum(rs.getString("album"));

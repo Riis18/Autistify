@@ -69,6 +69,7 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("genre"));
         songClmTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
+        mvm.loadSongs();
     }    
 
     @FXML

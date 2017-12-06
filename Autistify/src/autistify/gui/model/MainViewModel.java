@@ -35,6 +35,11 @@ public class MainViewModel {
         songList.add(song);
     }
     
+    public void loadSongs() {
+        songList.clear();
+        songList.addAll(sm.getAllSongs());
+    }
+    
    public static MainViewModel getInstance() throws IOException
     {
         if (instance == null)
