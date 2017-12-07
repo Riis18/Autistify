@@ -92,7 +92,20 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void openEditSong(ActionEvent event) {
+    private void openEditSong(ActionEvent event) throws IOException {  
+        
+        Song song = songTable.getSelectionModel().getSelectedItem();
+        mvm.addSelectedSong(song);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        AddSongViewController controller = fxmlLoader.getController();
+        controller.setModel(mvm);
+        Stage stage = new Stage();
+ 
+        stage.setScene(new Scene(root1));
+        stage.show();
+        
+        
     }
     
 }

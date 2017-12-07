@@ -45,7 +45,7 @@ public class SongDAO {
             
             int affected = pstmt.executeUpdate();
             if(affected<1)
-                throw new SQLException("pik");
+                throw new SQLException("Can't save song");
             
             //Get Database generated id
             ResultSet rs = pstmt.getGeneratedKeys();
@@ -94,6 +94,31 @@ public class SongDAO {
                     = con.prepareStatement(sql);
             pstmt.setInt(1, selectedSong.getId());
             pstmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(SongDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void edit(Song song) {
+        try (Connection con = dbConnector.getConnection()) {
+            String sql
+                    = "UPDATE song SET "
+                    +"name=?, artist=?, album=?, genre=?, path=?, trackLenght=? "
+                    +"WHERE songID=?";
+            PreparedStatement pstmt
+                    = con.prepareStatement(sql);
+            pstmt.setString(1, song.getName());
+            pstmt.setString(2, song.getArtist());
+            pstmt.setString(3, song.getAlbum());
+            pstmt.setString(4, song.getGenre());
+            pstmt.setString(5, song.getPath());
+            pstmt.setInt(6, song.getTrackLenght());
+            pstmt.setInt(7, song.getId());
+            
+            int affected = pstmt.executeUpdate();
+            if (affected<1)
+                throw new SQLException("Can't edit song");
+            
         } catch (SQLException ex) {
             Logger.getLogger(SongDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

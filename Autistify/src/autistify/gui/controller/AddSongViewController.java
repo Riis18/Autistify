@@ -19,8 +19,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import java.io.File; 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
@@ -63,12 +65,36 @@ public class AddSongViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(AddSongViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(!mvm.getSelectedSong().isEmpty()) {
+        txtTitle.setText(mvm.getSelectedSong().get(0).getName());
+        txtAlbum.setText(mvm.getSelectedSong().get(0).getAlbum());
+        txtArtist.setText(mvm.getSelectedSong().get(0).getArtist());
+        txtFilePath.setText(mvm.getSelectedSong().get(0).getPath());
+        txtGenre.setText(mvm.getSelectedSong().get(0).getGenre());
+        txtTime.setText(Integer.toString(mvm.getSelectedSong().get(0).getTrackLenght()));
+        
+        }
+
     }    
 
     @FXML
     private void saveSong(ActionEvent event) {
         
-        Song song = new Song();//txtTitle.getText(), txtAlbum.getText(), txtArtist.getText(), txtFilePath.getText(), txtGenre.getText(), Integer.parseInt(txtTime.getText()));
+        if(!mvm.getSelectedSong().isEmpty()) {
+        Song song = new Song();
+        song.setName(txtTitle.getText());
+        song.setAlbum(txtAlbum.getText());
+        song.setArtist(txtArtist.getText());
+        song.setPath(txtFilePath.getText());
+        song.setGenre(txtGenre.getText());
+        song.setTrackLenght(Integer.parseInt(txtTime.getText()));
+        song.setId(mvm.getSelectedSong().get(0).getId());
+        mvm.edit(song);
+        mvm.getSelectedSong().clear();
+            
+        } else {
+        
+        Song song = new Song();
         song.setId(-1);
         song.setName(txtTitle.getText());
         song.setAlbum(txtAlbum.getText());
@@ -77,6 +103,7 @@ public class AddSongViewController implements Initializable {
         song.setGenre(txtGenre.getText());
         song.setTrackLenght(Integer.parseInt(txtTime.getText()));
         mvm.addSong(song);
+        }
         
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
@@ -84,6 +111,8 @@ public class AddSongViewController implements Initializable {
 
     @FXML
     private void cancelAddSongView(ActionEvent event) {
+        
+        mvm.getSelectedSong().clear();
         
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
@@ -113,6 +142,10 @@ public class AddSongViewController implements Initializable {
 
         }
 
+    }
+    
+    public void setModel(MainViewModel model) {
+        this.mvm = model;
     }
     
 }

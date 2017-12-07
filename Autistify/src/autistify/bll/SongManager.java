@@ -33,4 +33,8 @@ public class SongManager {
     public void remove(Song selectedSong) {
         sdao.remove(selectedSong);
     }
+    
+    public void edit(Song song) {
+        sdao.edit(song);
+    }
 }

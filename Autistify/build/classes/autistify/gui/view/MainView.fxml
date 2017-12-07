@@ -97,6 +97,11 @@
             <JFXButton layoutX="528.0" layoutY="115.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Add to playlist" />
             <JFXTextField focusColor="BLACK" layoutX="671.0" layoutY="26.0" promptText="Search Here" />
             <JFXSlider layoutX="346.0" layoutY="61.0" />
+            <JFXButton layoutX="597.0" layoutY="561.0" onAction="#openEditSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Edit Song">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXButton>
          </children>
       </AnchorPane>
    </children>
