@@ -20,14 +20,8 @@ public class Song {
        private int id;
 
 
-    public Song() {//String name, String album, String artist, String path, String genre, int trackLenght) {
-//        
-//        this.name = name;
-//        this.album = album;
-//        this.artist = artist;
-//        this.path = path;
-//        this.genre = genre;
-//        this.trackLenght = trackLenght;
+    public Song() {
+
     }
 
     /**
