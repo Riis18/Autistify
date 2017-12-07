@@ -85,4 +85,17 @@ public class SongDAO {
         }
         return allSongs;
     }
+    
+    public void remove(Song selectedSong) {
+        try (Connection con = dbConnector.getConnection()) {
+            String sql
+                    = "DELETE FROM song WHERE songID=?";
+            PreparedStatement pstmt
+                    = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedSong.getId());
+            pstmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(SongDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

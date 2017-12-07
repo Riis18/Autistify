@@ -40,6 +40,11 @@ public class MainViewModel {
         songList.addAll(sm.getAllSongs());
     }
     
+    public void remove(Song selectedSong) {
+        sm.remove(selectedSong);
+        songList.remove(selectedSong);
+    }
+    
    public static MainViewModel getInstance() throws IOException
     {
         if (instance == null)

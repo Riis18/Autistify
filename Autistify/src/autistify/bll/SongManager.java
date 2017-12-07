@@ -29,4 +29,8 @@ public class SongManager {
     public void add(Song song) {
         sdao.createSong(song);
     }
+    
+    public void remove(Song selectedSong) {
+        sdao.remove(selectedSong);
+    }
 }

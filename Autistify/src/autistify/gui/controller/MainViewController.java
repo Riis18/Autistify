@@ -83,5 +83,16 @@ public class MainViewController implements Initializable {
         stage.show();
             
     }
+
+    @FXML
+    private void deleteSong(ActionEvent event) {
+        Song selectedSong
+                = songTable.getSelectionModel().getSelectedItem();
+        mvm.remove(selectedSong);
+    }
+
+    @FXML
+    private void openEditSong(ActionEvent event) {
+    }
     
 }
