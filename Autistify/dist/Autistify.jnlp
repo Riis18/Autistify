@@ -8,9 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Autistify.jar" size="15284" download="eager" />
+    <jar href="Autistify.jar" size="16012" download="eager" />
     <jar href="lib\jaudiotagger-2.2.3.jar" size="941715" download="eager" />
-    <jar href="lib\jfoenix.jar" size="2401594" download="eager" />
+    <jar href="lib\jfoenix.jar" size="2414497" download="eager" />
     <jar href="lib\sqljdbc42.jar" size="653996" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Autistify" >

@@ -6,7 +6,11 @@
 package autistify.gui.controller;
 
 import autistify.be.Song;
+import autistify.dal.SongDAO;
 import autistify.gui.model.MainViewModel;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,6 +25,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Stage;
 
 /**
@@ -28,8 +35,9 @@ import javafx.stage.Stage;
  *
  * @author Jesper Riis
  */
-public class MainViewController implements Initializable {
-    
+public class MainViewController implements Initializable
+{
+
     private Song song;
     private MainViewModel mvm;
     @FXML
@@ -44,19 +52,43 @@ public class MainViewController implements Initializable {
     private TableColumn<Song, String> songClmGenre;
     @FXML
     private TableColumn<Song, Integer> songClmTime;
+    @FXML
+    private JFXButton playPause;
+    @FXML
+    private TableView<?> playlistTable;
+    @FXML
+    private TableView<?> playlistSongs;
+    
+    private SongDAO sDAO;
+    
+    private MediaPlayer mp;
+    
+    private Media me;
+    
+    private String crntPath;
+    @FXML
+    private JFXButton previousSong;
+    @FXML
+    private JFXButton nextSong;
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        try {
+    public void initialize(URL url, ResourceBundle rb)
+    {
+
+        try
+        {
             mvm = MainViewModel.getInstance();
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         songTable.setItems(mvm.getSongs());
         songClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
@@ -69,31 +101,35 @@ public class MainViewController implements Initializable {
         songClmTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
         mvm.loadSongs();
-    }    
 
-    @FXML
-    private void openAddSongView(ActionEvent event) throws IOException {
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        
-        Stage stage = new Stage();
- 
-        stage.setScene(new Scene(root1));
-        stage.show();
-            
     }
 
     @FXML
-    private void deleteSong(ActionEvent event) {
+    private void openAddSongView(ActionEvent event) throws IOException
+    {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+
+        Stage stage = new Stage();
+
+        stage.setScene(new Scene(root1));
+        stage.show();
+
+    }
+
+    @FXML
+    private void deleteSong(ActionEvent event)
+    {
         Song selectedSong
                 = songTable.getSelectionModel().getSelectedItem();
         mvm.remove(selectedSong);
     }
 
     @FXML
-    private void openEditSong(ActionEvent event) throws IOException {  
-        
+    private void openEditSong(ActionEvent event) throws IOException
+    {
+
         Song song = songTable.getSelectionModel().getSelectedItem();
         mvm.addSelectedSong(song);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
@@ -101,11 +137,53 @@ public class MainViewController implements Initializable {
         AddSongViewController controller = fxmlLoader.getController();
         controller.setModel(mvm);
         Stage stage = new Stage();
- 
+
         stage.setScene(new Scene(root1));
         stage.show();
-        
-        
+
     }
-    
+
+    /**
+     * Plays and pauses the song selected in song table
+     * @param event 
+     */
+    @FXML
+    private void play(ActionEvent event)
+    {
+
+        if (playPause.getText().equals("Play"))
+        {
+            String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
+            if (crntPath == null || !crntPath.equals(path))
+            {
+                crntPath = path;
+                me = new Media(new File(path).toURI().toString());
+                if (mp != null)
+                {
+                    mp.dispose();
+                }
+                mp = new MediaPlayer(me);
+            }
+            playPause.setText("Pause");
+
+            mp.play();
+        } else
+        {
+            playPause.setText("Play");
+
+            mp.pause();
+        }
+
+    }
+
+    @FXML
+    private void previousSong(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void nextSong(ActionEvent event)
+    {
+    }
+
 }
