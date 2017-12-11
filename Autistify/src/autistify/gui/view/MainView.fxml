@@ -86,7 +86,7 @@
                   <DropShadow />
                </effect>
             </JFXButton>
-            <JFXButton layoutX="806.0" layoutY="26.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Search" />
+            <JFXButton fx:id="clearBtn" layoutX="806.0" layoutY="26.0" onAction="#Search" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Search" />
             <JFXButton layoutX="793.0" layoutY="561.0" onAction="#deleteSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
             <JFXButton layoutX="386.0" layoutY="564.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Remove" />
             <JFXButton layoutX="256.0" layoutY="561.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
@@ -95,7 +95,7 @@
             <JFXButton fx:id="playPause" layoutX="397.0" layoutY="81.0" onAction="#play" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Play" />
             <JFXButton fx:id="nextSong" layoutX="435.0" layoutY="81.0" onAction="#nextSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="&gt;&gt;&gt;" />
             <JFXButton layoutX="528.0" layoutY="115.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Add to playlist" />
-            <JFXTextField focusColor="BLACK" layoutX="671.0" layoutY="26.0" promptText="Search Here" />
+            <JFXTextField fx:id="txtSearch" focusColor="BLACK" layoutX="671.0" layoutY="26.0" promptText="Search Here" />
             <JFXSlider layoutX="346.0" layoutY="61.0" />
             <JFXButton layoutX="597.0" layoutY="561.0" onAction="#openEditSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Edit Song">
                <effect>

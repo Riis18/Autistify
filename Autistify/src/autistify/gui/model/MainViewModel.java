@@ -6,6 +6,7 @@
 package autistify.gui.model;
 
 import autistify.be.Song;
+import autistify.bll.PlaylistManager;
 import autistify.bll.SongManager;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class MainViewModel {
     private SongManager sm;
     public ObservableList<Song> songList;
     public ObservableList<Song> selectedSong;
+    private PlaylistManager pm;
 
     public MainViewModel() throws IOException {
         this.sm = new SongManager();
@@ -73,4 +75,9 @@ public class MainViewModel {
         }
         return instance;
     }
+   
+//   public void addPlaylist()
+//   {
+//       pm.add(playlist);
+//   }
 }

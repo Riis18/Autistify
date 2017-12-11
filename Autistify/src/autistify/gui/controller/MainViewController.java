@@ -6,6 +6,7 @@
 package autistify.gui.controller;
 
 import autistify.be.Song;
+import autistify.bll.SongFilter;
 import autistify.dal.SongDAO;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
@@ -17,17 +18,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Stage;
 
 /**
@@ -58,18 +64,27 @@ public class MainViewController implements Initializable
     private TableView<?> playlistTable;
     @FXML
     private TableView<?> playlistSongs;
-    
+
     private SongDAO sDAO;
-    
+
     private MediaPlayer mp;
-    
+
     private Media me;
-    
+
     private String crntPath;
     @FXML
     private JFXButton previousSong;
     @FXML
     private JFXButton nextSong;
+
+    private SongFilter sf;
+    @FXML
+    private JFXButton clearBtn;
+    @FXML
+    private JFXTextField txtSearch;
+    private ObservableList<Song> searchedSongs;
+    List<Song> songs;
+    
 
     /**
      * Initializes the controller class.
@@ -145,7 +160,8 @@ public class MainViewController implements Initializable
 
     /**
      * Plays and pauses the song selected in song table
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void play(ActionEvent event)
@@ -179,11 +195,53 @@ public class MainViewController implements Initializable
     @FXML
     private void previousSong(ActionEvent event)
     {
+        mp.getOnEndOfMedia();
+        songTable.getSelectionModel().selectPrevious();
+        String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
+        if (crntPath == null || !crntPath.equals(path))
+        {
+            crntPath = path;
+            me = new Media(new File(path).toURI().toString());
+            if (mp != null)
+            {
+                mp.dispose();
+            }
+            mp = new MediaPlayer(me);
+        }
+
+        mp.play();
     }
 
     @FXML
     private void nextSong(ActionEvent event)
     {
+
+        mp.getOnEndOfMedia();
+        songTable.getSelectionModel().selectNext();
+        String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
+        if (crntPath == null || !crntPath.equals(path))
+        {
+            crntPath = path;
+            me = new Media(new File(path).toURI().toString());
+            if (mp != null)
+            {
+                mp.dispose();
+            }
+            mp = new MediaPlayer(me);
+        }
+
+        mp.play();
+    }
+
+    @FXML
+    private void Search(ActionEvent event)
+    {
+        txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
+        -> {
+            searchedSongs.setAll(sf.search(songs, newQuery));
+            songTable.setItems(searchedSongs);
+        });
+        
     }
 
 }
