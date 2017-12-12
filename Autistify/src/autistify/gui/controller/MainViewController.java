@@ -28,6 +28,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -138,7 +140,14 @@ public class MainViewController implements Initializable
     {
         Song selectedSong
                 = songTable.getSelectionModel().getSelectedItem();
-        mvm.remove(selectedSong);
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
+        deleteAlert.setContentText("Are you sure you want to delete " + selectedSong.getName() + "?");
+        deleteAlert.showAndWait();
+        if (deleteAlert.getResult() == ButtonType.YES){
+            mvm.remove(selectedSong);
+        } else {
+            deleteAlert.close();
+        }
     }
 
     @FXML
