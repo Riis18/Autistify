@@ -38,6 +38,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -47,8 +48,7 @@ import javafx.stage.Stage;
  *
  * @author Jesper Riis
  */
-public class MainViewController implements Initializable
-{
+public class MainViewController implements Initializable {
 
     private Song song;
     private MainViewModel mvm;
@@ -94,7 +94,6 @@ public class MainViewController implements Initializable
     private Label txtSongPlaying;
     @FXML
     private JFXSlider vSlider;
-    
 
     /**
      * Initializes the controller class.
@@ -103,14 +102,11 @@ public class MainViewController implements Initializable
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
 
-        try
-        {
+        try {
             mvm = MainViewModel.getInstance();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -130,8 +126,7 @@ public class MainViewController implements Initializable
     }
 
     @FXML
-    private void openAddSongView(ActionEvent event) throws IOException
-    {
+    private void openAddSongView(ActionEvent event) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/AddSongView.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
@@ -144,14 +139,13 @@ public class MainViewController implements Initializable
     }
 
     @FXML
-    private void deleteSong(ActionEvent event)
-    {
+    private void deleteSong(ActionEvent event) {
         Song selectedSong
                 = songTable.getSelectionModel().getSelectedItem();
         Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
         deleteAlert.setContentText("Are you sure you want to delete " + selectedSong.getName() + "?");
         deleteAlert.showAndWait();
-        if (deleteAlert.getResult() == ButtonType.YES){
+        if (deleteAlert.getResult() == ButtonType.YES) {
             mvm.remove(selectedSong);
         } else {
             deleteAlert.close();
@@ -159,8 +153,7 @@ public class MainViewController implements Initializable
     }
 
     @FXML
-    private void openEditSong(ActionEvent event) throws IOException
-    {
+    private void openEditSong(ActionEvent event) throws IOException {
 
         Song song = songTable.getSelectionModel().getSelectedItem();
         mvm.addSelectedSong(song);
@@ -181,18 +174,14 @@ public class MainViewController implements Initializable
      * @param event
      */
     @FXML
-    private void play(ActionEvent event)
-    {
+    private void play(ActionEvent event) {
 
-        if (playPause.getText().equals("Play"))
-        {
+        if (playPause.getText().equals("Play")) {
             String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-            if (crntPath == null || !crntPath.equals(path))
-            {
+            if (crntPath == null || !crntPath.equals(path)) {
                 crntPath = path;
                 me = new Media(new File(path).toURI().toString());
-                if (mp != null)
-                {
+                if (mp != null) {
                     mp.dispose();
                 }
                 mp = new MediaPlayer(me);
@@ -201,8 +190,7 @@ public class MainViewController implements Initializable
             txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
 
             mp.play();
-        } else
-        {
+        } else {
             playPause.setText("Play");
 
             mp.pause();
@@ -211,69 +199,62 @@ public class MainViewController implements Initializable
     }
 
     @FXML
-    private void previousSong(ActionEvent event)
-    {
+    private void previousSong(ActionEvent event) {
         mp.getOnEndOfMedia();
         songTable.getSelectionModel().selectPrevious();
         String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-        if (crntPath == null || !crntPath.equals(path))
-        {
+        if (crntPath == null || !crntPath.equals(path)) {
             crntPath = path;
             me = new Media(new File(path).toURI().toString());
-            if (mp != null)
-            {
+            if (mp != null) {
                 mp.dispose();
             }
             mp = new MediaPlayer(me);
         }
         playPause.setText("Pause");
-        
+
         mp.play();
     }
 
     @FXML
-    private void nextSong(ActionEvent event)
-    {
+    private void nextSong(ActionEvent event) {
 
         mp.getOnEndOfMedia();
         songTable.getSelectionModel().selectNext();
         String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-        if (crntPath == null || !crntPath.equals(path))
-        {
+        if (crntPath == null || !crntPath.equals(path)) {
             crntPath = path;
             me = new Media(new File(path).toURI().toString());
-            if (mp != null)
-            {
+            if (mp != null) {
                 mp.dispose();
             }
             mp = new MediaPlayer(me);
         }
         playPause.setText("Pause");
-        
+
         mp.play();
     }
 
     @FXML
-    private void Search(ActionEvent event)
-    {
+    private void Search(ActionEvent event) {
         txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
-        -> {
+                -> {
             searchedSongs.setAll(sf.search(songs, newQuery));
             songTable.setItems(searchedSongs);
         });
-        
+
     }
+
     @FXML
-    private void vslider(ActionEvent event) {
+    private void vSlider(MouseEvent event) {
         vSlider.setValue(mp.getVolume() * 100);
         vSlider.valueProperty().addListener(new InvalidationListener() {
-            
+
             @Override
             public void invalidated(Observable observable) {
-                    mp.setVolume(vSlider.getValue() / 100);
+                mp.setVolume(vSlider.getValue() / 100);
             }
         });
-   
-            }
+    }
 
 }
