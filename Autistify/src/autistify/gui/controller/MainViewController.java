@@ -208,7 +208,8 @@ public class MainViewController implements Initializable
             }
             mp = new MediaPlayer(me);
         }
-
+        playPause.setText("Pause");
+        
         mp.play();
     }
 
@@ -229,7 +230,8 @@ public class MainViewController implements Initializable
             }
             mp = new MediaPlayer(me);
         }
-
+        playPause.setText("Pause");
+        
         mp.play();
     }
 
