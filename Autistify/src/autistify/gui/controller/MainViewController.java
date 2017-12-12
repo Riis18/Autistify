@@ -30,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -86,6 +87,8 @@ public class MainViewController implements Initializable
     private JFXTextField txtSearch;
     private ObservableList<Song> searchedSongs;
     List<Song> songs;
+    @FXML
+    private Label txtSongPlaying;
     
 
     /**
@@ -190,6 +193,7 @@ public class MainViewController implements Initializable
                 mp = new MediaPlayer(me);
             }
             playPause.setText("Pause");
+            txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
 
             mp.play();
         } else
