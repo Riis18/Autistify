@@ -10,6 +10,7 @@ import autistify.bll.SongFilter;
 import autistify.dal.SongDAO;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.net.URL;
@@ -22,6 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -89,6 +92,8 @@ public class MainViewController implements Initializable
     List<Song> songs;
     @FXML
     private Label txtSongPlaying;
+    @FXML
+    private JFXSlider vSlider;
     
 
     /**
@@ -258,5 +263,17 @@ public class MainViewController implements Initializable
         });
         
     }
+    @FXML
+    private void vslider(ActionEvent event) {
+        vSlider.setValue(mp.getVolume() * 100);
+        vSlider.valueProperty().addListener(new InvalidationListener() {
+            
+            @Override
+            public void invalidated(Observable observable) {
+                    mp.setVolume(vSlider.getValue() / 100);
+            }
+        });
+   
+            }
 
 }
