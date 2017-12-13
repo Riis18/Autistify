@@ -5,6 +5,7 @@
  */
 package autistify.gui.controller;
 
+import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.bll.SongFilter;
 import autistify.dal.SongDAO;
@@ -67,9 +68,11 @@ public class MainViewController implements Initializable {
     @FXML
     private JFXButton playPause;
     @FXML
-    private TableView<?> playlistTable;
+    private TableView<Playlist> playlistTable;
     @FXML
-    private TableView<?> playlistSongs;
+    private TableColumn<Playlist, String> playlistClmName;
+    @FXML
+    private TableView<Playlist> playlistSongs;
 
     private SongDAO sDAO;
 
@@ -122,7 +125,11 @@ public class MainViewController implements Initializable {
         songClmTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
         mvm.loadSongs();
-
+        
+        playlistTable.setItems(mvm.getPlaylists());
+        playlistClmName.setCellValueFactory(
+                new PropertyValueFactory("name"));
+        mvm.loadPlaylist();
     }
 
     @FXML
@@ -266,6 +273,19 @@ public class MainViewController implements Initializable {
 
         stage.setScene(new Scene(root2));
         stage.show();
+    }
+
+    @FXML
+    private void deletePlaylist(ActionEvent event) {
+        Playlist selectedPlaylist
+                = playlistTable.getSelectionModel().getSelectedItem();
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
+        deleteAlert.showAndWait();
+        if (deleteAlert.getResult() == ButtonType.YES) {
+            mvm.remove(selectedPlaylist);
+        } else {
+            deleteAlert.close();
+        }
     }
 
 }

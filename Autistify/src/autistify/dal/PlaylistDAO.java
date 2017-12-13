@@ -69,7 +69,7 @@ public class PlaylistDAO
                 ResultSet rs = pstmt.executeQuery();
                 while (rs.next()) {
                     Playlist playlist = new Playlist();
-                    playlist.setID(rs.getInt("songID"));
+                    playlist.setID(rs.getInt("playlistID"));
                     playlist.setName(rs.getString("name"));
                     
                     allPlaylists.add(playlist);
@@ -95,6 +95,19 @@ public class PlaylistDAO
             if (affected<1)
                 throw new SQLException("Can't edit playlist");
             
+        } catch (SQLException ex) {
+            Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void remove(Playlist selectedPlaylist) {
+        try (Connection con = dbConnector.getConnection()) {
+            String sql
+                    = "DELETE FROM playlist WHERE playlistID=?";
+            PreparedStatement pstmt
+                    = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylist.getID());
+            pstmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

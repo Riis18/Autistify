@@ -62,7 +62,7 @@
             </Pane>
             <TableView fx:id="playlistTable" layoutX="14.0" layoutY="167.0" prefHeight="390.0" prefWidth="290.0" style="-fx-background-color: #A2A5A5;">
               <columns>
-                <TableColumn prefWidth="213.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Playlist Name" />
+                <TableColumn fx:id="playlistClmName" prefWidth="213.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Playlist Name" />
                   <TableColumn prefWidth="76.0" style="-fx-background-color: #A2A5A5;" text="Total Length" />
               </columns>
             </TableView>
@@ -89,7 +89,7 @@
             <JFXButton fx:id="clearBtn" layoutX="806.0" layoutY="26.0" onAction="#Search" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Search" />
             <JFXButton layoutX="793.0" layoutY="561.0" onAction="#deleteSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
             <JFXButton layoutX="386.0" layoutY="564.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Remove" />
-            <JFXButton layoutX="256.0" layoutY="561.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
+            <JFXButton layoutX="256.0" layoutY="561.0" onAction="#deletePlaylist" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
             <JFXButton layoutX="14.0" layoutY="561.0" onAction="#openAddPlaylistView" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="New Playlist" />
             <JFXButton fx:id="previousSong" layoutX="356.0" layoutY="81.0" onAction="#previousSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="&lt;&lt;&lt;" />
             <JFXButton fx:id="playPause" layoutX="397.0" layoutY="81.0" onAction="#play" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Play" />

@@ -9,8 +9,11 @@ import autistify.be.Playlist;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,13 +38,19 @@ public class PlaylistViewController implements Initializable
 
     /**
      * Initializes the controller class.
-     * @param url
-     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        try {
+            mvm = MainViewModel.getInstance();
+        } catch (IOException ex) {
+            Logger.getLogger(PlaylistViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        if (!mvm.getSelectedPlaylist().isEmpty()) {
+            txtPL.setText(mvm.getSelectedPlaylist().get(0).getName());
+        }
+        
     }    
 
     @FXML
@@ -54,6 +63,7 @@ public class PlaylistViewController implements Initializable
             mvm.getSelectedPlaylist().clear();
             
         } else {
+            
             Playlist playlist = new Playlist();
             playlist.setName(txtPL.getText());
             playlist.setID(-1);
@@ -71,6 +81,10 @@ public class PlaylistViewController implements Initializable
         
         Stage stage = (Stage) cancelBtnPL.getScene().getWindow();
         stage.close();
+    }
+    
+    public void setModel(MainViewModel model) {
+        this.mvm = model;
     }
     
 }

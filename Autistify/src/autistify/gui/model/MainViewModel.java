@@ -102,7 +102,7 @@ public class MainViewModel {
    
    public void loadPlaylist() {
        playlistList.clear();
-       playlistList.addAll();
+       playlistList.addAll(pm.getAllPlaylists());
    }
    
    public void edit(Playlist playlist) {
@@ -110,5 +110,10 @@ public class MainViewModel {
        playlistList.add(playlist);
        playlistList.clear();
        playlistList.addAll(pm.getAllPlaylists());
+   }
+   
+   public void remove(Playlist selectedPlaylist) {
+       pm.remove(selectedPlaylist);
+       playlistList.remove(selectedPlaylist);
    }
 }

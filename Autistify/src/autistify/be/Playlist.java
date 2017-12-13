@@ -34,6 +34,10 @@ public class Playlist {
         this.name = name;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Playlist{" + "name=" + name + ", id=" + id + '}';
