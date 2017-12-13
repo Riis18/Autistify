@@ -5,6 +5,7 @@
  */
 package autistify.gui.model;
 
+import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.bll.PlaylistManager;
 import autistify.bll.SongManager;
@@ -25,11 +26,16 @@ public class MainViewModel {
     public ObservableList<Song> songList;
     public ObservableList<Song> selectedSong;
     private PlaylistManager pm;
+    public ObservableList<Playlist> playlistList;
+    public ObservableList<Playlist> selectedPlaylist;
 
     public MainViewModel() throws IOException {
         this.sm = new SongManager();
         songList = FXCollections.observableArrayList();
         selectedSong = FXCollections.observableArrayList();
+        this.pm = new PlaylistManager();
+        playlistList = FXCollections.observableArrayList();
+        selectedPlaylist = FXCollections.observableArrayList();
     }
     
     public ObservableList<Song> getSongs(){
@@ -76,8 +82,33 @@ public class MainViewModel {
         return instance;
     }
    
-//   public void addPlaylist()
-//   {
-//       pm.add(playlist);
-//   }
+   public void addPlaylist(Playlist playlist)
+   {
+       pm.add(playlist);
+       playlistList.add(playlist);
+   }
+   
+   public ObservableList<Playlist> getSelectedPlaylist() {
+       return selectedPlaylist;
+   }
+   
+   public void addSelectedPlaylist(Playlist playlist) {
+       selectedPlaylist.add(playlist);
+   }
+   
+   public ObservableList<Playlist> getPlaylists() {
+       return playlistList;
+   }
+   
+   public void loadPlaylist() {
+       playlistList.clear();
+       playlistList.addAll();
+   }
+   
+   public void edit(Playlist playlist) {
+       pm.edit(playlist);
+       playlistList.add(playlist);
+       playlistList.clear();
+       playlistList.addAll(pm.getAllPlaylists());
+   }
 }

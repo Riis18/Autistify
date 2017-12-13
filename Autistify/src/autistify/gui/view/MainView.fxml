@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autistify.gui.controller.MainViewController">
+<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autistify.gui.controller.MainViewController">
    <children>
       <AnchorPane prefHeight="632.0" prefWidth="856.0" style="-fx-background-color: GREY; -fx-background-radius: 0.5em;">
          <children>
@@ -90,7 +90,7 @@
             <JFXButton layoutX="793.0" layoutY="561.0" onAction="#deleteSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
             <JFXButton layoutX="386.0" layoutY="564.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Remove" />
             <JFXButton layoutX="256.0" layoutY="561.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Delete" />
-            <JFXButton layoutX="14.0" layoutY="561.0" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="New Playlist" />
+            <JFXButton layoutX="14.0" layoutY="561.0" onAction="#openAddPlaylistView" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="New Playlist" />
             <JFXButton fx:id="previousSong" layoutX="356.0" layoutY="81.0" onAction="#previousSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="&lt;&lt;&lt;" />
             <JFXButton fx:id="playPause" layoutX="397.0" layoutY="81.0" onAction="#play" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="Play" />
             <JFXButton fx:id="nextSong" layoutX="435.0" layoutY="81.0" onAction="#nextSong" ripplerFill="RED" style="-fx-background-color: #6e6e6e;" text="&gt;&gt;&gt;" />

@@ -5,6 +5,7 @@
  */
 package autistify.gui.controller;
 
+import autistify.be.Playlist;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -34,6 +35,8 @@ public class PlaylistViewController implements Initializable
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -44,7 +47,18 @@ public class PlaylistViewController implements Initializable
     @FXML
     private void savePlaylist(ActionEvent event)
     {
-//        mvm.addPlaylist();
+        if (!mvm.getSelectedPlaylist().isEmpty()) { 
+            Playlist playlist = new Playlist();
+            playlist.setName(txtPL.getText());
+            playlist.setID(mvm.getSelectedPlaylist().get(0).getID());
+            mvm.getSelectedPlaylist().clear();
+            
+        } else {
+            Playlist playlist = new Playlist();
+            playlist.setName(txtPL.getText());
+            playlist.setID(-1);
+            mvm.addPlaylist(playlist);
+        }
         
         Stage stage = (Stage) saveBtnPL.getScene().getWindow();
         stage.close();
@@ -53,6 +67,8 @@ public class PlaylistViewController implements Initializable
     @FXML
     private void cancelPlaylist(ActionEvent event)
     {
+        mvm.getSelectedPlaylist().clear();
+        
         Stage stage = (Stage) cancelBtnPL.getScene().getWindow();
         stage.close();
     }

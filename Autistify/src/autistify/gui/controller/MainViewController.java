@@ -257,4 +257,15 @@ public class MainViewController implements Initializable {
         });
     }
 
+    @FXML
+    private void openAddPlaylistView(ActionEvent event) throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/PlaylistView.fxml"));
+        Parent root2 = (Parent) fxmlLoader.load();
+
+        Stage stage = new Stage();
+
+        stage.setScene(new Scene(root2));
+        stage.show();
+    }
+
 }

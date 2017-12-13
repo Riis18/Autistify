@@ -5,7 +5,9 @@
  */
 package autistify.bll;
 
+import autistify.be.Playlist;
 import autistify.dal.PlaylistDAO;
+import java.util.List;
 
 /**
  *
@@ -14,10 +16,18 @@ import autistify.dal.PlaylistDAO;
 public class PlaylistManager
 {
     
-//    private PlaylistDAO pDAO;
-//    
-//    public void add(Playlist playlist)
-//    {
-//        pDAO.createPlaylist();
-//    }
+    private PlaylistDAO pDAO;
+    
+    public void add(Playlist playlist)
+    {
+        pDAO.createPlaylist(playlist);
+    }
+    
+    public List<Playlist> getAllPlaylists() {
+        return pDAO.getAllPlaylists();
+    }
+    
+    public void edit(Playlist playlist) {
+        pDAO.edit(playlist);
+    }
 }
