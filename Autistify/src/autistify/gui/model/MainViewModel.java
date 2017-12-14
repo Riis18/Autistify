@@ -28,6 +28,7 @@ public class MainViewModel {
     private PlaylistManager pm;
     public ObservableList<Playlist> playlistList;
     public ObservableList<Playlist> selectedPlaylist;
+    public ObservableList<Playlist> playlists;
 
     public MainViewModel() throws IOException {
         this.sm = new SongManager();
@@ -86,6 +87,7 @@ public class MainViewModel {
    {
        pm.add(playlist);
        playlistList.add(playlist);
+       playlistList = FXCollections.observableArrayList(playlist);
    }
    
    public ObservableList<Playlist> getSelectedPlaylist() {
@@ -116,4 +118,6 @@ public class MainViewModel {
        pm.remove(selectedPlaylist);
        playlistList.remove(selectedPlaylist);
    }
+   
+   
 }

@@ -5,6 +5,10 @@
  */
 package autistify.be;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author ollie
@@ -13,9 +17,10 @@ public class Playlist {
     
     public String name;
     private int id;
+    private final List<Song> songList;
     
     public Playlist() {
-        
+        this.songList = new ArrayList();
     }
     
     public int getID() {
@@ -34,6 +39,9 @@ public class Playlist {
         this.name = name;
     }
     
+    public List<Song> getSongList() {
+        return songList;
+    }
     /**
      *
      * @return

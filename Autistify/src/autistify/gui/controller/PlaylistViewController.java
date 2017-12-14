@@ -67,6 +67,7 @@ public class PlaylistViewController implements Initializable
             Playlist playlist = new Playlist();
             playlist.setName(txtPL.getText());
             playlist.setID(-1);
+            
             mvm.addPlaylist(playlist);
         }
         

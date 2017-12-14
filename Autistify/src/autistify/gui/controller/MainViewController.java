@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -72,7 +75,7 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<Playlist, String> playlistClmName;
     @FXML
-    private TableView<Playlist> playlistSongs;
+    private TableView<Song> playlistSongs;
 
     private SongDAO sDAO;
 
@@ -97,6 +100,10 @@ public class MainViewController implements Initializable {
     private Label txtSongPlaying;
     @FXML
     private JFXSlider vSlider;
+    @FXML
+    private TableColumn<Song, String> psSongName;
+    @FXML
+    private TableColumn<Song, Integer> psSongTime;
 
     /**
      * Initializes the controller class.
@@ -130,6 +137,12 @@ public class MainViewController implements Initializable {
         playlistClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         mvm.loadPlaylist();
+        
+        psSongName.setCellValueFactory(
+                new PropertyValueFactory("name"));
+        psSongTime.setCellValueFactory(
+                new PropertyValueFactory("trackLenght"));
+        
         
         
     }
@@ -300,7 +313,24 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void addToPlaylist(ActionEvent event) {
+        Song selectedSong = songTable.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
+        selectedPlaylist.getSongList().add(selectedSong);
+    }
+
+    @FXML
+    private void addPlaylist(MouseDragEvent event) {
         
+        Song selectedSong = songTable.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
+        selectedPlaylist.getSongList().add(selectedSong);
+        playlistSongs.setItems((ObservableList<Song>) selectedPlaylist.getSongList());
+    }
+
+    @FXML
+    private void getPlaylistSong(MouseEvent event) {
+        
+        playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
     }
 
 }

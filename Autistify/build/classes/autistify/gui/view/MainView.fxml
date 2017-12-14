@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autistify.gui.controller.MainViewController">
+<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autistify.gui.controller.MainViewController">
    <children>
       <AnchorPane prefHeight="632.0" prefWidth="856.0" style="-fx-background-color: GREY; -fx-background-radius: 0.5em;">
          <children>
@@ -60,7 +60,7 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="playlistTable" layoutX="14.0" layoutY="167.0" prefHeight="390.0" prefWidth="290.0" style="-fx-background-color: #A2A5A5;">
+            <TableView fx:id="playlistTable" layoutX="14.0" layoutY="167.0" onMouseClicked="#getPlaylistSong" prefHeight="390.0" prefWidth="290.0" style="-fx-background-color: #A2A5A5;">
               <columns>
                 <TableColumn fx:id="playlistClmName" prefWidth="213.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Playlist Name" />
                   <TableColumn prefWidth="76.0" style="-fx-background-color: #A2A5A5;" text="Total Length" />
@@ -68,11 +68,11 @@
             </TableView>
             <TableView fx:id="playlistSongs" layoutX="307.0" layoutY="206.0" prefHeight="350.0" prefWidth="217.0" style="-fx-background-color: #A2A5A5;">
                <columns>
-                  <TableColumn prefWidth="157.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Song Name" />
-                  <TableColumn prefWidth="59.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Time" />
+                  <TableColumn fx:id="psSongName" prefWidth="157.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Song Name" />
+                  <TableColumn fx:id="psSongTime" prefWidth="59.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Time" />
                </columns>
             </TableView>
-            <TableView fx:id="songTable" layoutX="528.0" layoutY="167.0" prefHeight="390.0" prefWidth="315.0" style="-fx-background-color: #A2A5A5;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="167.0">
+            <TableView fx:id="songTable" layoutX="528.0" layoutY="167.0" onMouseDragReleased="#addPlaylist" prefHeight="390.0" prefWidth="315.0" style="-fx-background-color: #A2A5A5;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="167.0">
                <columns>
                   <TableColumn fx:id="songClmName" prefWidth="95.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Name" />
                   <TableColumn fx:id="songClmArtist" minWidth="0.0" prefWidth="55.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Artist" />
