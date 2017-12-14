@@ -6,6 +6,7 @@
 package autistify.bll;
 
 import autistify.be.Playlist;
+import autistify.be.Song;
 import autistify.dal.PlaylistDAO;
 import java.io.IOException;
 import java.util.List;
@@ -38,5 +39,13 @@ public class PlaylistManager
     
     public void remove(Playlist selectedPlaylist) {
         pDAO.remove(selectedPlaylist);
+    }
+
+    public void addSongToPlaylist(Playlist playlist, Song song) {
+        pDAO.addSongToPlaylist(playlist, song);
+    }
+    
+    public List<Playlist> getAllSongsFromPlaylist(Playlist playlist, Song song) {
+        return pDAO.getAllSongsFromPlaylist(playlist, song);
     }
 }

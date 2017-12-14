@@ -118,6 +118,18 @@ public class MainViewModel {
        pm.remove(selectedPlaylist);
        playlistList.remove(selectedPlaylist);
    }
+
+    public void addSongToPlaylist(Playlist playlist, Song song) {
+        pm.addSongToPlaylist(playlist, song);
+    }
+    
+    public ObservableList<Playlist> getSongsFromPlaylist() {
+        return playlists;
+    }
+    
+    public void loadSongsInPlaylist(Playlist playlist, Song song) {
+        playlistList.addAll(pm.getAllSongsFromPlaylist(playlist, song));
+    }
    
    
 }

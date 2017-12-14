@@ -6,6 +6,7 @@
 package autistify.dal;
 
 import autistify.be.Playlist;
+import autistify.be.Song;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -112,5 +113,47 @@ public class PlaylistDAO
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void addSongToPlaylist(Playlist playlist, Song song) {
+        
+                try (Connection con = dbConnector.getConnection()) {
+           String sql = "INSERT INTO playlistSongs"
+                   + "(songID, playlistID)"
+                   + "VALUES (?,?)";
+           PreparedStatement pstmt
+                   = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+           pstmt.setInt(1, song.getId());
+           pstmt.setInt(2, playlist.getID());
+           
+           int affected = pstmt.executeUpdate();
+           if (affected<1)
+                   throw new SQLException("Can't save song to playlist");
+                 
+        }
+        
+        catch (SQLException ex) {
+            Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        
+    }
+        public List<Playlist> getAllSongsFromPlaylist(Playlist playlist, Song song) {
+            List<Playlist> allSongsFromPlaylist = new ArrayList();
+            
+            try (Connection con = dbConnector.getConnection()) {
+                PreparedStatement pstmt
+                        = con.prepareStatement("SELECT * FROM playlistSongs");
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    playlist.setID(rs.getInt("playlistID"));
+                    song.setId(rs.getInt("songID"));
+                    
+                    allSongsFromPlaylist.add(playlist);
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allSongsFromPlaylist;
+        }
     
 }

@@ -55,6 +55,7 @@ import javafx.stage.Stage;
 public class MainViewController implements Initializable {
 
     private Song song;
+    private Playlist playlist;
     private MainViewModel mvm;
     @FXML
     private TableView<Song> songTable;
@@ -119,7 +120,6 @@ public class MainViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         songTable.setItems(mvm.getSongs());
         songClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
@@ -142,8 +142,6 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("name"));
         psSongTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
-        
-        
         
     }
 
@@ -316,6 +314,7 @@ public class MainViewController implements Initializable {
         Song selectedSong = songTable.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
         selectedPlaylist.getSongList().add(selectedSong);
+        mvm.addSongToPlaylist(selectedPlaylist, selectedSong);
     }
 
     @FXML
