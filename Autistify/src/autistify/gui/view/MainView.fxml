@@ -72,7 +72,7 @@
                   <TableColumn fx:id="psSongTime" prefWidth="59.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Time" />
                </columns>
             </TableView>
-            <TableView fx:id="songTable" layoutX="528.0" layoutY="167.0" onMouseDragReleased="#addPlaylist" prefHeight="390.0" prefWidth="315.0" style="-fx-background-color: #A2A5A5;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="167.0">
+            <TableView fx:id="songTable" layoutX="528.0" layoutY="167.0" prefHeight="390.0" prefWidth="315.0" style="-fx-background-color: #A2A5A5;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="167.0">
                <columns>
                   <TableColumn fx:id="songClmName" prefWidth="95.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Name" />
                   <TableColumn fx:id="songClmArtist" minWidth="0.0" prefWidth="55.0" resizable="false" style="-fx-background-color: #A2A5A5;" text="Artist" />

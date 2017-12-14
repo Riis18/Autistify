@@ -319,15 +319,6 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void addPlaylist(MouseDragEvent event) {
-        
-        Song selectedSong = songTable.getSelectionModel().getSelectedItem();
-        Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
-        selectedPlaylist.getSongList().add(selectedSong);
-        playlistSongs.setItems((ObservableList<Song>) selectedPlaylist.getSongList());
-    }
-
-    @FXML
     private void getPlaylistSong(MouseEvent event) {
         
         playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
