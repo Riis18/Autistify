@@ -130,6 +130,8 @@ public class MainViewController implements Initializable {
         playlistClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         mvm.loadPlaylist();
+        
+        
     }
 
     @FXML
@@ -219,6 +221,10 @@ public class MainViewController implements Initializable {
             mp = new MediaPlayer(me);
         }
         playPause.setText("Pause");
+        
+        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
+        
+        mp.setVolume(vSlider.getValue() / 100);
 
         mp.play();
     }
@@ -238,6 +244,10 @@ public class MainViewController implements Initializable {
             mp = new MediaPlayer(me);
         }
         playPause.setText("Pause");
+        
+        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
+        
+        mp.setVolume(vSlider.getValue() / 100);
 
         mp.play();
     }
@@ -286,6 +296,11 @@ public class MainViewController implements Initializable {
         } else {
             deleteAlert.close();
         }
+    }
+
+    @FXML
+    private void addToPlaylist(ActionEvent event) {
+        
     }
 
 }
