@@ -20,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,19 +28,15 @@ import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -56,7 +51,15 @@ public class MainViewController implements Initializable {
 
     private Song song;
     private Playlist playlist;
+    private SongDAO sDAO;
+    private MediaPlayer mp;
+    private Media me;
+    private String crntPath;
+    private SongFilter sf;
+    private ObservableList<Song> searchedSongs;
+    List<Song> songs;
     private MainViewModel mvm;
+    
     @FXML
     private TableView<Song> songTable;
     @FXML
@@ -77,26 +80,14 @@ public class MainViewController implements Initializable {
     private TableColumn<Playlist, String> playlistClmName;
     @FXML
     private TableView<Song> playlistSongs;
-
-    private SongDAO sDAO;
-
-    private MediaPlayer mp;
-
-    private Media me;
-
-    private String crntPath;
     @FXML
     private JFXButton previousSong;
     @FXML
     private JFXButton nextSong;
-
-    private SongFilter sf;
     @FXML
     private JFXButton clearBtn;
     @FXML
     private JFXTextField txtSearch;
-    private ObservableList<Song> searchedSongs;
-    List<Song> songs;
     @FXML
     private Label txtSongPlaying;
     @FXML
@@ -105,6 +96,7 @@ public class MainViewController implements Initializable {
     private TableColumn<Song, String> psSongName;
     @FXML
     private TableColumn<Song, Integer> psSongTime;
+;
 
     /**
      * Initializes the controller class.
@@ -121,6 +113,7 @@ public class MainViewController implements Initializable {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         songTable.setItems(mvm.getSongs());
+        
         songClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         songClmArtist.setCellValueFactory(
@@ -131,18 +124,22 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("genre"));
         songClmTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
+        
         mvm.loadSongs();
         
         playlistTable.setItems(mvm.getPlaylists());
+        
         playlistClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
-        mvm.loadPlaylist();
         
+        mvm.loadPlaylist();
+
         psSongName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         psSongTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
         
+        mvm.loadSongsInPlaylist();
     }
 
     @FXML
@@ -197,6 +194,7 @@ public class MainViewController implements Initializable {
     private void play(ActionEvent event) {
 
         if (playPause.getText().equals("Play")) {
+            
             String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
             if (crntPath == null || !crntPath.equals(path)) {
                 crntPath = path;
@@ -314,6 +312,7 @@ public class MainViewController implements Initializable {
         Song selectedSong = songTable.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
         selectedPlaylist.getSongList().add(selectedSong);
+        System.out.println(selectedPlaylist.getSongList());
         mvm.addSongToPlaylist(selectedPlaylist, selectedSong);
     }
 
@@ -321,6 +320,22 @@ public class MainViewController implements Initializable {
     private void getPlaylistSong(MouseEvent event) {
         
         playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
+    }
+
+    @FXML
+    private void removeSongPl(ActionEvent event) {
+        
+        Song selectedSong
+                = playlistSongs.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist
+                = playlistTable.getSelectionModel().getSelectedItem();
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
+        deleteAlert.showAndWait();
+        if (deleteAlert.getResult() == ButtonType.YES) {
+            mvm.removeSongPl(selectedSong, selectedPlaylist);
+        } else {
+            deleteAlert.close();
+        }
     }
 
 }
