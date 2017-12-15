@@ -17,7 +17,7 @@ public class Playlist {
     
     public String name;
     private int id;
-    private List<Song> songList;
+    private final List<Song> songList;
     
     public Playlist() {
         this.songList = new ArrayList();
@@ -42,7 +42,6 @@ public class Playlist {
     public List<Song> getSongList() {
         return songList;
     }
-    
     /**
      *
      * @return

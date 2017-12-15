@@ -7,6 +7,7 @@ package autistify.dal;
 
 import autistify.be.Playlist;
 import autistify.be.Song;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +28,6 @@ public class PlaylistDAO
 {
     
     private DataBaseConnector dbConnector;
-    private final List<Playlist> allPlaylists = new ArrayList();
     
     
     public PlaylistDAO() throws IOException
@@ -39,7 +39,7 @@ public class PlaylistDAO
     {
         try (Connection con = dbConnector.getConnection()) {
            String sql = "INSERT INTO playlist"
-                   + "(plName)"
+                   + "(name)"
                    + "VALUES (?)";
            PreparedStatement pstmt
                    = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -62,25 +62,22 @@ public class PlaylistDAO
     
 
     public List<Playlist> getAllPlaylists() {
+            List<Playlist> allPlaylists = new ArrayList();
             
             try (Connection con = dbConnector.getConnection()) {
                 PreparedStatement pstmt
                         = con.prepareStatement("SELECT * FROM playlist");
-                                
-                             
                 ResultSet rs = pstmt.executeQuery();
                 while (rs.next()) {
                     Playlist playlist = new Playlist();
                     playlist.setID(rs.getInt("playlistID"));
-                    playlist.setName(rs.getString("plName"));
-                    allPlaylists.add(playlist);
+                    playlist.setName(rs.getString("name"));
                     
-
+                    allPlaylists.add(playlist);
                 }
             } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(allPlaylists);
         return allPlaylists;
         }
     
@@ -131,7 +128,6 @@ public class PlaylistDAO
            int affected = pstmt.executeUpdate();
            if (affected<1)
                    throw new SQLException("Can't save song to playlist");
-           
                  
         }
         
@@ -141,49 +137,23 @@ public class PlaylistDAO
                 
         
     }
-        public void getAllSongsFromPlaylist() {
+        public List<Playlist> getAllSongsFromPlaylist(Playlist playlist, Song song) {
+            List<Playlist> allSongsFromPlaylist = new ArrayList();
             
             try (Connection con = dbConnector.getConnection()) {
                 PreparedStatement pstmt
-                        = con.prepareStatement("SELECT * FROM playlistSongs, song, playlist"
-                                + " WHERE playlistSongs.songID = song.songID AND playlistSongs.playlistID = playlist.playlistID");
+                        = con.prepareStatement("SELECT * FROM playlistSongs");
                 ResultSet rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    Playlist playlist = new Playlist();
-                    Song song = new Song();
                     playlist.setID(rs.getInt("playlistID"));
                     song.setId(rs.getInt("songID"));
-                    song.setName(rs.getString("name"));
-                    song.setTrackLenght(rs.getInt("trackLenght"));
-                    song.setPath(rs.getString("path"));
                     
-                    for (int i = 0; i < allPlaylists.size(); i++) { 
-                        if(allPlaylists.get(i).getID() == playlist.getID() ) 
-                        {
-                        allPlaylists.get(i).getSongList().add(song);
-                        }
-                    }
-                    
+                    allSongsFromPlaylist.add(playlist);
                 }
-                
             } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+        return allSongsFromPlaylist;
         }
-
-    public void removeSongPl(Song selectedSong, Playlist selectedPlaylist) {
-            try (Connection con = dbConnector.getConnection()) {
-            String sql
-                    = "DELETE FROM playlistSongs WHERE songID=? AND playlistID=?";
-            PreparedStatement pstmt
-                    = con.prepareStatement(sql);
-            pstmt.setInt(1, selectedSong.getId());
-            pstmt.setInt(2, selectedPlaylist.getID());
-            pstmt.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
 }

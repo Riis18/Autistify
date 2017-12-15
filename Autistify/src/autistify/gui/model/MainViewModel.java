@@ -10,6 +10,8 @@ import autistify.be.Song;
 import autistify.bll.PlaylistManager;
 import autistify.bll.SongManager;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,6 +28,7 @@ public class MainViewModel {
     private PlaylistManager pm;
     public ObservableList<Playlist> playlistList;
     public ObservableList<Playlist> selectedPlaylist;
+    public ObservableList<Playlist> playlists;
 
     public MainViewModel() throws IOException {
         this.sm = new SongManager();
@@ -84,6 +87,7 @@ public class MainViewModel {
    {
        pm.add(playlist);
        playlistList.add(playlist);
+       playlistList = FXCollections.observableArrayList(playlist);
    }
    
    public ObservableList<Playlist> getSelectedPlaylist() {
@@ -95,14 +99,12 @@ public class MainViewModel {
    }
    
    public ObservableList<Playlist> getPlaylists() {
-       playlistList = FXCollections.observableArrayList();
        return playlistList;
    }
    
    public void loadPlaylist() {
        playlistList.clear();
        playlistList.addAll(pm.getAllPlaylists());
-       
    }
    
    public void edit(Playlist playlist) {
@@ -121,13 +123,12 @@ public class MainViewModel {
         pm.addSongToPlaylist(playlist, song);
     }
     
-    public void loadSongsInPlaylist() {
-        pm.getAllSongsFromPlaylist();
+    public ObservableList<Playlist> getSongsFromPlaylist() {
+        return playlists;
     }
-
-    public void removeSongPl(Song selectedSong, Playlist selectedPlaylist) {
-       pm.removeSongPl(selectedSong, selectedPlaylist);
-       playlistList.remove(selectedPlaylist.getSongList().remove(selectedSong));
+    
+    public void loadSongsInPlaylist(Playlist playlist, Song song) {
+        playlistList.addAll(pm.getAllSongsFromPlaylist(playlist, song));
     }
    
    

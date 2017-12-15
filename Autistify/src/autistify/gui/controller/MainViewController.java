@@ -22,7 +22,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.util.Iterator;
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,16 +35,23 @@ import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+<<<<<<< HEAD
 import javafx.scene.input.KeyEvent;
+=======
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -55,6 +66,7 @@ public class MainViewController implements Initializable {
 
     private Song song;
     private Playlist playlist;
+<<<<<<< HEAD
     private SongDAO sDAO;
     private MediaPlayer mp;
     private Media me;
@@ -62,8 +74,9 @@ public class MainViewController implements Initializable {
     private SongFilter sf;
     private ObservableList<Song> searchedSongs;
     private List<Song> songs;
+=======
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
     private MainViewModel mvm;
-    
     @FXML
     private TableView<Song> songTable;
     @FXML
@@ -84,14 +97,26 @@ public class MainViewController implements Initializable {
     private TableColumn<Playlist, String> playlistClmName;
     @FXML
     private TableView<Song> playlistSongs;
+
+    private SongDAO sDAO;
+
+    private MediaPlayer mp;
+
+    private Media me;
+
+    private String crntPath;
     @FXML
     private JFXButton previousSong;
     @FXML
     private JFXButton nextSong;
+
+    private SongFilter sf;
     @FXML
     private JFXButton clearBtn;
     @FXML
     private JFXTextField txtSearch;
+    private ObservableList<Song> searchedSongs;
+    List<Song> songs;
     @FXML
     private Label txtSongPlaying;
     @FXML
@@ -100,11 +125,14 @@ public class MainViewController implements Initializable {
     private TableColumn<Song, String> psSongName;
     @FXML
     private TableColumn<Song, Integer> psSongTime;
+<<<<<<< HEAD
 ;
     @FXML
     private JFXButton cancelRmvSongPl;
     
     private SongManager sm;
+=======
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
 
     /**
      * Initializes the controller class.
@@ -121,11 +149,15 @@ public class MainViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+<<<<<<< HEAD
         
         songs = sm.getAllSongs();
         songTable.getItems().setAll(songs);
                 
         
+=======
+        songTable.setItems(mvm.getSongs());
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
         songClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         songClmArtist.setCellValueFactory(
@@ -136,24 +168,24 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("genre"));
         songClmTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
-        
         mvm.loadSongs();
         
         playlistTable.setItems(mvm.getPlaylists());
-        
         playlistClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
-        
         mvm.loadPlaylist();
-
+        
         psSongName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         psSongTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
         
+<<<<<<< HEAD
         mvm.loadSongsInPlaylist();
         
         this.sf = new SongFilter();
+=======
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
     }
 
     @FXML
@@ -209,7 +241,6 @@ public class MainViewController implements Initializable {
     private void play(ActionEvent event) {
 
         if (playPause.getText().equals("Play")) {
-            
             String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
             String pPath = new File(playlistSongs.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
             if (crntPath == null || !crntPath.equals(path)) {
@@ -340,7 +371,6 @@ public class MainViewController implements Initializable {
         Song selectedSong = songTable.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
         selectedPlaylist.getSongList().add(selectedSong);
-        System.out.println(selectedPlaylist.getSongList());
         mvm.addSongToPlaylist(selectedPlaylist, selectedSong);
     }
 
@@ -350,6 +380,7 @@ public class MainViewController implements Initializable {
         playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
     }
 
+<<<<<<< HEAD
     @FXML
     private void removeSongPl(ActionEvent event) {
         
@@ -385,4 +416,6 @@ public class MainViewController implements Initializable {
         
     }
 
+=======
+>>>>>>> parent of 52b76df... kl 4 om natten.. fik ordnet playlisten.. fuck mig + ryddet op
 }

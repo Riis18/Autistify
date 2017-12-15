@@ -45,11 +45,7 @@ public class PlaylistManager
         pDAO.addSongToPlaylist(playlist, song);
     }
     
-    public void getAllSongsFromPlaylist() {
-       pDAO.getAllSongsFromPlaylist();
-    }
-
-    public void removeSongPl(Song selectedSong, Playlist selectedPlaylist) {
-        pDAO.removeSongPl(selectedSong, selectedPlaylist);
+    public List<Playlist> getAllSongsFromPlaylist(Playlist playlist, Song song) {
+        return pDAO.getAllSongsFromPlaylist(playlist, song);
     }
 }
