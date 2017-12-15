@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Autistify.jar" size="26156" download="eager" />
+    <jar href="Autistify.jar" size="28095" download="eager" />
     <jar href="lib\jaudiotagger-2.2.3.jar" size="941715" download="eager" />
     <jar href="lib\jfoenix.jar" size="2401594" download="eager" />
     <jar href="lib\sqljdbc42.jar" size="653996" download="eager" />

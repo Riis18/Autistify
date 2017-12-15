@@ -46,7 +46,7 @@ public class PlaylistManager
     }
     
     public void getAllSongsFromPlaylist() {
-       pDAO.getAllSongsFromPlaylist();
+        pDAO.getAllSongsFromPlaylist();
     }
 
     public void removeSongPl(Song selectedSong, Playlist selectedPlaylist) {

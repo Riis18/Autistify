@@ -26,7 +26,6 @@ public class SongFilter
     public List<Song> search(List<Song> songs, String searchQuery)
     {
         List<Song> result = FXCollections.observableArrayList();
-        System.out.println("Lort");
         
         for (Song song : songs)
         {
@@ -39,7 +38,6 @@ public class SongFilter
             }
         }
         
-        System.out.println(result.size());
         return result;
     }
 }

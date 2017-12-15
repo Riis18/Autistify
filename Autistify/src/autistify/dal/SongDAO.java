@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Animation.Status;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -25,6 +30,10 @@ public class SongDAO {
     
     private DataBaseConnector dbConnector;
     
+    @FXML
+    private Button playPause;
+    
+    private MediaPlayer mp;
     
     public SongDAO() throws IOException {
         dbConnector = new DataBaseConnector();

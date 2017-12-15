@@ -7,6 +7,7 @@ package autistify.dal;
 
 import autistify.be.Playlist;
 import autistify.be.Song;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,16 +67,13 @@ public class PlaylistDAO
             try (Connection con = dbConnector.getConnection()) {
                 PreparedStatement pstmt
                         = con.prepareStatement("SELECT * FROM playlist");
-                                
-                             
                 ResultSet rs = pstmt.executeQuery();
                 while (rs.next()) {
                     Playlist playlist = new Playlist();
                     playlist.setID(rs.getInt("playlistID"));
                     playlist.setName(rs.getString("plName"));
-                    allPlaylists.add(playlist);
                     
-
+                    allPlaylists.add(playlist);
                 }
             } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +129,6 @@ public class PlaylistDAO
            int affected = pstmt.executeUpdate();
            if (affected<1)
                    throw new SQLException("Can't save song to playlist");
-           
                  
         }
         
@@ -141,30 +138,31 @@ public class PlaylistDAO
                 
         
     }
-        public void getAllSongsFromPlaylist() {
+    public void getAllSongsFromPlaylist() {
             
-            try (Connection con = dbConnector.getConnection()) {
-                PreparedStatement pstmt
-                        = con.prepareStatement("SELECT * FROM playlistSongs, song, playlist"
-                                + " WHERE playlistSongs.songID = song.songID AND playlistSongs.playlistID = playlist.playlistID");
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    Playlist playlist = new Playlist();
-                    Song song = new Song();
-                    playlist.setID(rs.getInt("playlistID"));
-                    song.setId(rs.getInt("songID"));
-                    song.setName(rs.getString("name"));
-                    song.setTrackLenght(rs.getInt("trackLenght"));
-                    song.setPath(rs.getString("path"));
+        try (Connection con = dbConnector.getConnection()) {
+            PreparedStatement pstmt
+                    = con.prepareStatement("SELECT * FROM playlistSongs, song, playlist"
+                            + " WHERE playlistSongs.songID = song.songID AND playlistSongs.playlistID = playlist.playlistID");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Playlist playlist = new Playlist();
+                Song song = new Song();
+                playlist.setID(rs.getInt("playlistID"));
+                song.setId(rs.getInt("songID"));
+                song.setName(rs.getString("name"));
+                song.setTrackLenght(rs.getInt("trackLenght"));
+                song.setPath(rs.getString("path"));
                     
-                    for (int i = 0; i < allPlaylists.size(); i++) { 
-                        if(allPlaylists.get(i).getID() == playlist.getID() ) 
-                        {
-                        allPlaylists.get(i).getSongList().add(song);
-                        }
+                for (int i = 0; i < allPlaylists.size(); i++) { 
+                    if(allPlaylists.get(i).getID() == playlist.getID() ) 
+                    {
+                        System.out.println(allPlaylists.get(i).getID());
+                    allPlaylists.get(i).getSongList().add(song);
                     }
-                    
                 }
+                    
+            }
                 
             } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
