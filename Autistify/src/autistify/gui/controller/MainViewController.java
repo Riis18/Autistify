@@ -105,8 +105,6 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<Song, Integer> psSongTime;
 
-    @FXML
-    private JFXButton cancelRmvSongPl;
     
     private SongManager sm;
 
@@ -350,22 +348,6 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void removeSongPl(ActionEvent event) {
-        
-        Song selectedSong
-                = playlistSongs.getSelectionModel().getSelectedItem();
-        Playlist selectedPlaylist
-                = playlistTable.getSelectionModel().getSelectedItem();
-        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
-        deleteAlert.showAndWait();
-        if (deleteAlert.getResult() == ButtonType.YES) {
-            mvm.removeSongPl(selectedSong, selectedPlaylist);
-        } else {
-            deleteAlert.close();
-        }
-    }
-
-    @FXML
     private void SearchType(KeyEvent event)
     {
 //        String filter = txtSearch.getText();
@@ -382,6 +364,21 @@ public class MainViewController implements Initializable {
         
         
         
+    }
+
+    @FXML
+    private void removeSongPl(ActionEvent event) {
+        Song selectedSong
+                = playlistSongs.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist
+                = playlistTable.getSelectionModel().getSelectedItem();
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
+        deleteAlert.showAndWait();
+        if (deleteAlert.getResult() == ButtonType.YES) {
+            mvm.removeSongPl(selectedSong, selectedPlaylist);
+        } else {
+            deleteAlert.close();
+        }
     }
 
 }
