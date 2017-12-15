@@ -123,7 +123,7 @@ public class MainViewController implements Initializable {
         }
         
         songs = sm.getAllSongs();
-        songTable.getItems().setAll(songs);
+        songTable.setItems(mvm.getSongs());
                 
         
         songClmName.setCellValueFactory(
@@ -153,7 +153,7 @@ public class MainViewController implements Initializable {
         
         mvm.loadSongsInPlaylist();
         
-        this.sf = new SongFilter();
+        //this.sf = new SongFilter();
     }
 
     @FXML
@@ -287,13 +287,13 @@ public class MainViewController implements Initializable {
 //            searchedSongs.setAll(sf.search(songs, newQuery));
 //            songTable.setItems(searchedSongs);}
 //        });
-        System.out.println(txtSearch.getText());
-
-        ObservableList<Song> newList = FXCollections.observableArrayList();
-        newList.addAll(sf.search(songs, txtSearch.getText()));
-        //searchedSongs.setAll(sf.search(songs, txtSearch.getText()));
-        songTable.getItems().setAll(newList);
-
+//        System.out.println(txtSearch.getText());
+//
+//        ObservableList<Song> newList = FXCollections.observableArrayList();
+//        newList.addAll(sf.search(songs, txtSearch.getText()));
+//        //searchedSongs.setAll(sf.search(songs, txtSearch.getText()));
+//        songTable.getItems().setAll(newList);
+//
 
     }
 
@@ -367,17 +367,17 @@ public class MainViewController implements Initializable {
     @FXML
     private void SearchType(KeyEvent event)
     {
-        String filter = txtSearch.getText();
-        System.out.println(filter);
-        
-        if (filter.equals("")) {
-            songTable.getItems().setAll(mvm.getSongs());
-        }
-        else {
-        ObservableList<Song> newList = FXCollections.observableArrayList();
-        newList.addAll(sf.search(songs, txtSearch.getText()));
-        songTable.getItems().setAll(newList);
-        }
+//        String filter = txtSearch.getText();
+//        System.out.println(filter);
+//        
+//        if (filter.equals("")) {
+//            songTable.getItems().setAll(mvm.getSongs());
+//        }
+//        else {
+//        ObservableList<Song> newList = FXCollections.observableArrayList();
+//        newList.addAll(sf.search(songs, txtSearch.getText()));
+//        songTable.getItems().setAll(newList);
+//        }
         
         
         
