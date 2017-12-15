@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author ollie
+ * @author ollie //hej
  */
 public class Playlist {
     
