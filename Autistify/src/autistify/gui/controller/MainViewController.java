@@ -8,11 +8,13 @@ package autistify.gui.controller;
 import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.bll.SongFilter;
+import autistify.bll.SongManager;
 import autistify.dal.SongDAO;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.javafx.collections.ElementObservableListDecorator;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +40,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -57,7 +61,7 @@ public class MainViewController implements Initializable {
     private String crntPath;
     private SongFilter sf;
     private ObservableList<Song> searchedSongs;
-    List<Song> songs;
+    private List<Song> songs;
     private MainViewModel mvm;
     
     @FXML
@@ -97,6 +101,10 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<Song, Integer> psSongTime;
 ;
+    @FXML
+    private JFXButton cancelRmvSongPl;
+    
+    private SongManager sm;
 
     /**
      * Initializes the controller class.
@@ -109,10 +117,14 @@ public class MainViewController implements Initializable {
 
         try {
             mvm = MainViewModel.getInstance();
+            this.sm = new SongManager();
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        songTable.setItems(mvm.getSongs());
+        
+        songs = sm.getAllSongs();
+        songTable.getItems().setAll(songs);
+                
         
         songClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
@@ -140,6 +152,8 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("trackLenght"));
         
         mvm.loadSongsInPlaylist();
+        
+        this.sf = new SongFilter();
     }
 
     @FXML
@@ -210,6 +224,8 @@ public class MainViewController implements Initializable {
             mp.play();
         } else {
             playPause.setText("Play");
+            
+            mp.setVolume(vSlider.getValue() / 100);
 
             mp.pause();
         }
@@ -263,11 +279,21 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void Search(ActionEvent event) {
-        txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
-                -> {
-            searchedSongs.setAll(sf.search(songs, newQuery));
-            songTable.setItems(searchedSongs);
-        });
+//        txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
+//                -> {
+//            
+//            System.out.println(newQuery);
+//            if (newQuery != null) {
+//            searchedSongs.setAll(sf.search(songs, newQuery));
+//            songTable.setItems(searchedSongs);}
+//        });
+        System.out.println(txtSearch.getText());
+
+        ObservableList<Song> newList = FXCollections.observableArrayList();
+        newList.addAll(sf.search(songs, txtSearch.getText()));
+        //searchedSongs.setAll(sf.search(songs, txtSearch.getText()));
+        songTable.getItems().setAll(newList);
+
 
     }
 
@@ -336,6 +362,25 @@ public class MainViewController implements Initializable {
         } else {
             deleteAlert.close();
         }
+    }
+
+    @FXML
+    private void SearchType(KeyEvent event)
+    {
+        String filter = txtSearch.getText();
+        System.out.println(filter);
+        
+        if (filter.equals("")) {
+            songTable.getItems().setAll(mvm.getSongs());
+        }
+        else {
+        ObservableList<Song> newList = FXCollections.observableArrayList();
+        newList.addAll(sf.search(songs, txtSearch.getText()));
+        songTable.getItems().setAll(newList);
+        }
+        
+        
+        
     }
 
 }

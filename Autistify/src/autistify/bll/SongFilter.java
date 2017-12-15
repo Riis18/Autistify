@@ -10,6 +10,8 @@ import autistify.dal.SongDAO;
 import autistify.gui.model.MainViewModel;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -21,9 +23,10 @@ public class SongFilter
     private MainViewModel mvm;
     private SongDAO sDAO;
     
-    public ArrayList<Song> search(List<Song> songs, String searchQuery)
+    public List<Song> search(List<Song> songs, String searchQuery)
     {
-        ArrayList<Song> result = new ArrayList<>();
+        List<Song> result = FXCollections.observableArrayList();
+        System.out.println("Lort");
         
         for (Song song : songs)
         {
@@ -35,6 +38,8 @@ public class SongFilter
                 result.add(song);
             }
         }
+        
+        System.out.println(result.size());
         return result;
     }
 }
