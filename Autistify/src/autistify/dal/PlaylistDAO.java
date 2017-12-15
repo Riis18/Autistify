@@ -78,7 +78,6 @@ public class PlaylistDAO
             } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(allPlaylists);
         return allPlaylists;
         }
     
