@@ -181,6 +181,7 @@ public class MainViewController implements Initializable {
         } else {
             deleteAlert.close();
         }
+        mvm.loadSongs();
     }
 
     @FXML
@@ -210,6 +211,7 @@ public class MainViewController implements Initializable {
         if (playPause.getText().equals("Play")) {
             
             String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
+            String pPath = new File(playlistSongs.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
             if (crntPath == null || !crntPath.equals(path)) {
                 crntPath = path;
                 me = new Media(new File(path).toURI().toString());
