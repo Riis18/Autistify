@@ -124,7 +124,6 @@ public class MainViewController implements Initializable {
         }
         songTable.setItems(mvm.getSongs());
                 
-        
 
         songTable.setItems(mvm.getSongs());
         
@@ -170,18 +169,39 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void deleteSong(ActionEvent event) {
+        boolean isSongOnPlaylist = false;
         Song selectedSong
                 = songTable.getSelectionModel().getSelectedItem();
-        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
-        deleteAlert.setContentText("Are you sure you want to delete " + selectedSong.getName() + "?");
-        deleteAlert.showAndWait();
-        if (deleteAlert.getResult() == ButtonType.YES) {
-            mvm.remove(selectedSong);
-        } else {
-            deleteAlert.close();
+        for (int i = 0; i < mvm.getPlaylists().size(); i++) {
+            if(!mvm.getPlaylists().get(i).getSongList().isEmpty()) {
+                for (int j = 0; j < mvm.getPlaylists().get(i).getSongList().size(); j++) {
+                    if(selectedSong.getId() == mvm.getPlaylists().get(i).getSongList().get(j).getId()) {
+                    isSongOnPlaylist = true;
+                }
+              }
+          }
+        }
+        if(isSongOnPlaylist == true) {
+              Alert warningAlert = new Alert(Alert.AlertType.WARNING,"The song is part of a playlist. Remove the song from the playlist first");
+              warningAlert.showAndWait();
+            
+        } else
+        {
+          Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
+          deleteAlert.setContentText("Are you sure you want to delete " + selectedSong.getName() + "?");
+          deleteAlert.showAndWait();
+          if (deleteAlert.getResult() == ButtonType.YES) {
+              mvm.remove(selectedSong);
+          } else {
+              deleteAlert.close();
+                 }
+            
         }
         mvm.loadSongs();
     }
+ 
+    
+    
 
     @FXML
     private void openEditSong(ActionEvent event) throws IOException {
@@ -322,14 +342,20 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void deletePlaylist(ActionEvent event) {
+        
         Playlist selectedPlaylist
                 = playlistTable.getSelectionModel().getSelectedItem();
+        if(!selectedPlaylist.getSongList().isEmpty()) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING,"Playlist contains songs, please remove them first");
+            warningAlert.showAndWait();
+        } else {
         Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm Delete", ButtonType.YES, ButtonType.NO);
         deleteAlert.showAndWait();
         if (deleteAlert.getResult() == ButtonType.YES) {
             mvm.remove(selectedPlaylist);
         } else {
             deleteAlert.close();
+        }
         }
     }
 

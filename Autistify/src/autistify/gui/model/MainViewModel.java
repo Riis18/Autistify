@@ -115,8 +115,8 @@ public class MainViewModel {
    }
    
    public void remove(Playlist selectedPlaylist) {
-       pm.remove(selectedPlaylist);
        playlistList.remove(selectedPlaylist);
+       pm.remove(selectedPlaylist);
    }
 
     public void addSongToPlaylist(Playlist playlist, Song song) {

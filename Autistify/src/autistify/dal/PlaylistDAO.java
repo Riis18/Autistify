@@ -108,6 +108,7 @@ public class PlaylistDAO
             PreparedStatement pstmt
                     = con.prepareStatement(sql);
             pstmt.setInt(1, selectedPlaylist.getID());
+            
             pstmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -156,7 +157,6 @@ public class PlaylistDAO
                 for (int i = 0; i < allPlaylists.size(); i++) { 
                     if(allPlaylists.get(i).getID() == playlist.getID() ) 
                     {
-                        System.out.println(allPlaylists.get(i).getID());
                     allPlaylists.get(i).getSongList().add(song);
                     }
                 }
