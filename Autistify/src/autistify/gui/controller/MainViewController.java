@@ -59,6 +59,7 @@ import javafx.stage.Stage;
 public class MainViewController implements Initializable {
 
     private Song song;
+    private boolean songOrPsong;
     private Playlist playlist;
     private SongDAO sDAO;
     private MediaPlayer mp;
@@ -119,6 +120,7 @@ public class MainViewController implements Initializable {
 
         try {
             mvm = MainViewModel.getInstance();
+            song =  new Song();
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -150,7 +152,21 @@ public class MainViewController implements Initializable {
         
         mvm.loadSongsInPlaylist();
         //this.sf = new SongFilter();
+        songTable.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
+        if (newItem != null) {
+            playlistSongs.getSelectionModel().clearSelection();
+            songOrPsong = true;
+            System.out.println(songOrPsong);
+        }
+        });
 
+       playlistSongs.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
+        if (newItem != null) {
+            songTable.getSelectionModel().clearSelection();
+            songOrPsong = false;
+            System.out.println(songOrPsong);
+        }
+        });
     }
 
     @FXML
@@ -197,6 +213,7 @@ public class MainViewController implements Initializable {
             
         }
         mvm.loadSongs();
+        
     }
  
     
@@ -225,6 +242,7 @@ public class MainViewController implements Initializable {
      */
     @FXML
     private void play(ActionEvent event) {
+        if(songOrPsong == true) {
         Song songPlaying = songTable.getSelectionModel().getSelectedItem();
         if (playPause.getText().equals("Play")) {
             mvm.PlaySong(songPlaying);
@@ -235,8 +253,20 @@ public class MainViewController implements Initializable {
             mvm.setVolume(vSlider);
             mvm.pauseSong(songPlaying);
         }
+        } else if (songOrPsong == false) {
+        Song songPlaying = playlistSongs.getSelectionModel().getSelectedItem();
+        if (playPause.getText().equals("Play")) {
+            mvm.PlaySong(songPlaying);
+            playPause.setText("Pause");
+            txtSongPlaying.setText("Current Song - " + playlistSongs.getSelectionModel().getSelectedItem().getName());
+        } else {
+            playPause.setText("Play");
+            mvm.setVolume(vSlider);
+            mvm.pauseSong(songPlaying);
+        }
+        }
     }
-
+    
     @FXML
     private void previousSong(ActionEvent event) {
         mvm.getOnEndOfMedia();
@@ -244,7 +274,7 @@ public class MainViewController implements Initializable {
         Song songPlaying = songTable.getSelectionModel().getSelectedItem();
         mvm.PlaySong(songPlaying);
         playPause.setText("Pause");
-        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());  
+        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
     }
 
     @FXML
