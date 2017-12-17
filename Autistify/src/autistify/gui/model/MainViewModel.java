@@ -144,10 +144,6 @@ public class MainViewModel {
     public void setVolume(JFXSlider vSlider) {
         sm.setVolume(vSlider);
     }
-
-    public void getOnEndOfMedia() {
-        sm.getOnEndOfMedia();
-    }
     
    
    

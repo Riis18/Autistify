@@ -76,8 +76,4 @@ public class SongManager {
               }
             });
         }
-
-    public void getOnEndOfMedia() {
-        mp.getOnEndOfMedia();
-        }
 }

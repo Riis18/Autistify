@@ -269,22 +269,38 @@ public class MainViewController implements Initializable {
     
     @FXML
     private void previousSong(ActionEvent event) {
-        mvm.getOnEndOfMedia();
+        if(songOrPsong == true) {
         songTable.getSelectionModel().selectPrevious();
         Song songPlaying = songTable.getSelectionModel().getSelectedItem();
         mvm.PlaySong(songPlaying);
         playPause.setText("Pause");
         txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
+        } else if (songOrPsong == false) {
+        playlistSongs.getSelectionModel().selectPrevious();
+        Song songPlaying = playlistSongs.getSelectionModel().getSelectedItem();
+        mvm.PlaySong(songPlaying);
+        playPause.setText("Pause");
+        txtSongPlaying.setText("Current Song - " + playlistSongs.getSelectionModel().getSelectedItem().getName());
+            
+        }
     }
 
     @FXML
     private void nextSong(ActionEvent event) {
-        mvm.getOnEndOfMedia();
+        if(songOrPsong == true) {
         songTable.getSelectionModel().selectNext();
         Song songPlaying = songTable.getSelectionModel().getSelectedItem();
         mvm.PlaySong(songPlaying);
         playPause.setText("Pause");
-        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());  
+        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName()); 
+        } else if(songOrPsong == false) {
+        playlistSongs.getSelectionModel().selectNext();
+        Song songPlaying = playlistSongs.getSelectionModel().getSelectedItem();
+        mvm.PlaySong(songPlaying);
+        playPause.setText("Pause");
+        txtSongPlaying.setText("Current Song - " + playlistSongs.getSelectionModel().getSelectedItem().getName());
+            
+        }
     }
 
     @FXML
