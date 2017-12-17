@@ -124,7 +124,6 @@ public class MainViewController implements Initializable {
         }
         songTable.setItems(mvm.getSongs());
                 
-
         songTable.setItems(mvm.getSongs());
         
         songClmName.setCellValueFactory(
@@ -226,75 +225,36 @@ public class MainViewController implements Initializable {
      */
     @FXML
     private void play(ActionEvent event) {
-
+        Song songPlaying = songTable.getSelectionModel().getSelectedItem();
         if (playPause.getText().equals("Play")) {
-            String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-            String pPath = new File(playlistSongs.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-            if (crntPath == null || !crntPath.equals(path)) {
-                crntPath = path;
-                me = new Media(new File(path).toURI().toString());
-                if (mp != null) {
-                    mp.dispose();
-                }
-                mp = new MediaPlayer(me);
-            }
+            mvm.PlaySong(songPlaying);
             playPause.setText("Pause");
             txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
-
-            mp.play();
         } else {
             playPause.setText("Play");
-            
-            mp.setVolume(vSlider.getValue() / 100);
-
-            mp.pause();
+            mvm.setVolume(vSlider);
+            mvm.pauseSong(songPlaying);
         }
-
     }
 
     @FXML
     private void previousSong(ActionEvent event) {
-        mp.getOnEndOfMedia();
+        mvm.getOnEndOfMedia();
         songTable.getSelectionModel().selectPrevious();
-        String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-        if (crntPath == null || !crntPath.equals(path)) {
-            crntPath = path;
-            me = new Media(new File(path).toURI().toString());
-            if (mp != null) {
-                mp.dispose();
-            }
-            mp = new MediaPlayer(me);
-        }
+        Song songPlaying = songTable.getSelectionModel().getSelectedItem();
+        mvm.PlaySong(songPlaying);
         playPause.setText("Pause");
-        
-        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
-        
-        mp.setVolume(vSlider.getValue() / 100);
-
-        mp.play();
+        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());  
     }
 
     @FXML
     private void nextSong(ActionEvent event) {
-
-        mp.getOnEndOfMedia();
+        mvm.getOnEndOfMedia();
         songTable.getSelectionModel().selectNext();
-        String path = new File(songTable.getSelectionModel().getSelectedItem().getPath()).getAbsolutePath();
-        if (crntPath == null || !crntPath.equals(path)) {
-            crntPath = path;
-            me = new Media(new File(path).toURI().toString());
-            if (mp != null) {
-                mp.dispose();
-            }
-            mp = new MediaPlayer(me);
-        }
+        Song songPlaying = songTable.getSelectionModel().getSelectedItem();
+        mvm.PlaySong(songPlaying);
         playPause.setText("Pause");
-        
-        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());
-        
-        mp.setVolume(vSlider.getValue() / 100);
-
-        mp.play();
+        txtSongPlaying.setText("Current Song - " + songTable.getSelectionModel().getSelectedItem().getName());  
     }
 
     @FXML
@@ -319,14 +279,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void vSlider(MouseEvent event) {
-        vSlider.setValue(mp.getVolume() * 100);
-        vSlider.valueProperty().addListener(new InvalidationListener() {
-
-            @Override
-            public void invalidated(Observable observable) {
-                mp.setVolume(vSlider.getValue() / 100);
-            }
-        });
+        mvm.setVolume(vSlider);
     }
 
     @FXML

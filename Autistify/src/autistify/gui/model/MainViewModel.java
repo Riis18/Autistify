@@ -9,6 +9,7 @@ import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.bll.PlaylistManager;
 import autistify.bll.SongManager;
+import com.jfoenix.controls.JFXSlider;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,23 @@ public class MainViewModel {
         pm.removeSongPl(selectedSong, selectedPlaylist);
         playlistList.remove(selectedPlaylist.getSongList().remove(selectedSong));
     }
+    
+    public void pauseSong(Song songPlaying) {
+        sm.pauseSong(songPlaying);
+    }
+
+    public void PlaySong(Song songPlaying) {
+       sm.PlaySong(songPlaying);
+    }
+
+    public void setVolume(JFXSlider vSlider) {
+        sm.setVolume(vSlider);
+    }
+
+    public void getOnEndOfMedia() {
+        sm.getOnEndOfMedia();
+    }
+    
    
    
 }
