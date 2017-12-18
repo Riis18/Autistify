@@ -28,33 +28,53 @@ public class SongManager {
     private MediaPlayer mp;
     private String crntPath;
 
+    /*
+    * Constructor for SongManager
+    */
     public SongManager() throws IOException {
         this.sdao = new SongDAO();
     }
     
+    /*
+    * a list that returns all songs
+    */
     public List<Song> getAllSongs() {
         return sdao.getAllSongs();
     }
     
+    /*
+    * Sends information of song information
+    */
     public void add(Song song) {
         sdao.createSong(song);
     }
     
+    /*
+    * Sends information of which song should be removed
+    */
     public void remove(Song selectedSong) {
         sdao.remove(selectedSong);
     }
     
+    /*
+    * Sends information on which song should be edited and to what
+    */
     public void edit(Song song) {
         sdao.edit(song);
     }
     
+    /*
+    * Pauses the song
+    */
     public void pauseSong(Song songplaying) {
             mp.pause();
     }
 
+    /*
+    * gets the specific file location of a the song and plays it
+    */
     public void PlaySong(Song songPlaying) {
             songPlaying = songPlaying;
-            int time = songPlaying.getTrackLenght();
             File soundFile = new File(songPlaying.getPath());
             if (crntPath == null || !crntPath.equals(soundFile.getAbsolutePath())) {
                 crntPath = soundFile.toString();
@@ -68,6 +88,9 @@ public class SongManager {
             
         }
 
+    /*
+    * sets the volume of the song playing
+    */
     public void setVolume(JFXSlider vSlider) {
             vSlider.setValue(mp.getVolume() * 100);
             vSlider.valueProperty().addListener(new InvalidationListener() {
@@ -79,6 +102,9 @@ public class SongManager {
             });
         }
 
+    /*
+    * returns the Media Player
+    */
     public MediaPlayer getMediaPlayer() {
         return mp;
     }

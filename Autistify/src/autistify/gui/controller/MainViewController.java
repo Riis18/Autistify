@@ -101,15 +101,15 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        // Gets the instance of MainViewModel
         try {
             mvm = MainViewModel.getInstance();
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        songTable.setItems(mvm.getSongs());
-                
-        songTable.setItems(mvm.getSongs());
-        
+        // Sets the items on song table
+        songTable.setItems(mvm.getSongs());;
+        // Sets all cells to their values fir song table
         songClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         songClmArtist.setCellValueFactory(
@@ -120,24 +120,31 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("genre"));
         songClmTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
+        // Loads all songs
         mvm.loadSongs();
-        
+        // Sets items in the playlist table
         playlistTable.setItems(mvm.getPlaylists());
+        // Sets the cells to their values for playlist table
         playlistClmName.setCellValueFactory(
                 new PropertyValueFactory("name"));
+        // Loads all playlist
         mvm.loadPlaylist();
-        
+        // Sets the cells to their values for playlist song table
         psSongName.setCellValueFactory(
                 new PropertyValueFactory("name"));
         psSongTime.setCellValueFactory(
                 new PropertyValueFactory("trackLenght"));
-        
+        // Loads all the songs in every playlist
         mvm.loadSongsInPlaylist();
-
+        // Checks to see which table is selected between playlist song table and song table
         checkWhichTableIsSelected();
+        // Filter to search through songs in song table
         searchSong();
     }
 
+    /*
+    * Opens the add song view
+    */
     @FXML
     private void openAddSongView(ActionEvent event) throws IOException {
 
@@ -151,6 +158,11 @@ public class MainViewController implements Initializable {
 
     }
 
+    /*
+    * Checks to see if there is a playlist that contains the song and if there is
+    * a alert will come up, if it isn't an alert come up to ask if you want to delete
+    * the song selected.
+    */
     @FXML
     private void deleteSong(ActionEvent event) {
         boolean isSongOnPlaylist = false;
@@ -185,8 +197,9 @@ public class MainViewController implements Initializable {
     }
  
     
-    
-
+    /*
+    * Opens the add song view
+    */
     @FXML
     private void openEditSong(ActionEvent event) throws IOException {
 
@@ -204,8 +217,9 @@ public class MainViewController implements Initializable {
     }
 
     /**
-     * Plays and pauses the song selected in song table
-     *
+     * if the song is selected from song list it will play and pause a song from that list
+     * and the same from a playlist song
+     * and if its from a playlist song it will autoplay the next song on the list
      * @param event
      */
     @FXML
@@ -238,6 +252,9 @@ public class MainViewController implements Initializable {
         setOnMediaEnd();
     }
     
+    /*
+    * Selects the precious song on the list. And checks to see what table is selected
+    */
     @FXML
     private void previousSong(ActionEvent event) {
         if(songOrPsong == true) {
@@ -256,6 +273,9 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /*
+    * Selects the next song on the list. And checks to see what table is selected
+    */
     @FXML
     private void nextSong(ActionEvent event) {
         if(songOrPsong == true) {
@@ -274,6 +294,9 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /*
+    * Searches through songs in song table
+    */
     private void searchSong() {
         txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
         -> {
@@ -282,13 +305,17 @@ public class MainViewController implements Initializable {
         });
     }
 
-    
-
+    /*
+    * sets the volume slider
+    */
     @FXML
     private void vSlider(MouseEvent event) {
         mvm.setVolume(vSlider);
     }
 
+    /*
+    * Opens the add playlistView
+    */
     @FXML
     private void openAddPlaylistView(ActionEvent event) throws IOException {
          FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/PlaylistView.fxml"));
@@ -300,6 +327,10 @@ public class MainViewController implements Initializable {
         stage.show();
     }
 
+    /*
+    * Deletes the playlist, if there is songs on the playlist an alert will
+    * come.
+    */
     @FXML
     private void deletePlaylist(ActionEvent event) {
         
@@ -317,9 +348,11 @@ public class MainViewController implements Initializable {
             deleteAlert.close();
         }
         }
-       // mvm.loadPlaylist();
     }
 
+    /*
+    * Adds the selected song to the selected playlist
+    */
     @FXML
     private void addToPlaylist(ActionEvent event) {
         Song selectedSong = songTable.getSelectionModel().getSelectedItem();
@@ -328,12 +361,18 @@ public class MainViewController implements Initializable {
         mvm.addSongToPlaylist(selectedPlaylist, selectedSong);
     }
 
+    /*
+    * Sets the songs on playlist song table by clicking on a playlist
+    */
     @FXML
     private void getPlaylistSong(MouseEvent event) {
         
         playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
     }
 
+    /*
+    * Removes the selected song from the selected playlist
+    */
     @FXML
     private void removeSongPl(ActionEvent event) {
         Song selectedSong
@@ -349,6 +388,9 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /*
+    * Sets on Media end and tries to run autoPlay
+    */
     public void setOnMediaEnd() {
         mvm.getMediaPlayer().setOnEndOfMedia(new Runnable() {
             @Override
@@ -359,7 +401,11 @@ public class MainViewController implements Initializable {
                 }
             }
         });
-}
+    }
+    
+    /*
+    * Checks to see if the list has ended else play next song
+    */
     private void autoPlay() throws SQLServerException {
             int listSize = mvm.getSongs().size() -1;
             if(listSize == playlistSongs.getSelectionModel().getSelectedIndex()) {
@@ -371,12 +417,14 @@ public class MainViewController implements Initializable {
             mvm.PlaySong(song);
     }
     
+    /*
+    * Checks to see which table is selected
+    */
     private void checkWhichTableIsSelected() {
         songTable.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
         if (newItem != null) {
             playlistSongs.getSelectionModel().clearSelection();
             songOrPsong = true;
-            System.out.println(songOrPsong);
         }
         });
 
@@ -384,11 +432,13 @@ public class MainViewController implements Initializable {
         if (newItem != null) {
             songTable.getSelectionModel().clearSelection();
             songOrPsong = false;
-            System.out.println(songOrPsong);
         }
         });
     }
 
+    /*
+    * Adds the selected playlist to a list and opens the playlistView
+    */
     @FXML
     private void renamePlaylist(ActionEvent event) throws IOException {
         Playlist playlist = playlistTable.getSelectionModel().getSelectedItem();

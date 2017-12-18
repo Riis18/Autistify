@@ -53,6 +53,9 @@ public class PlaylistViewController implements Initializable
         
     }    
 
+    /*
+    * Edit an existing playlist or saves a new one to the database
+    */
     @FXML
     private void savePlaylist(ActionEvent event)
     {
@@ -76,6 +79,9 @@ public class PlaylistViewController implements Initializable
         stage.close();
     }
 
+    /*
+    * Closes the playlistview
+    */
     @FXML
     private void cancelPlaylist(ActionEvent event)
     {
@@ -85,6 +91,9 @@ public class PlaylistViewController implements Initializable
         stage.close();
     }
     
+    /*
+    * sets the model to MainViewModel
+    */
     public void setModel(MainViewModel model) {
         this.mvm = model;
     }

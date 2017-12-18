@@ -17,7 +17,9 @@ public class SongFilter
 {
     
 
-    
+    /*
+    * A filter that searches for song by making a new list
+    */
     public ArrayList<Song> search(List<Song> songs, String searchQuery) {
         ArrayList<Song> result = new ArrayList<>();
         

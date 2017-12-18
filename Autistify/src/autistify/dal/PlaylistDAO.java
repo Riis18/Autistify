@@ -29,12 +29,17 @@ public class PlaylistDAO
     private DataBaseConnector dbConnector;
     private final List<Playlist> allPlaylists = new ArrayList();
     
-    
+    /*
+    * Constructor for PlaylistDAO
+    */
     public PlaylistDAO() throws IOException
     {
         dbConnector = new DataBaseConnector();    
     }
     
+    /*
+    * Inserts the values of a playlist into the database table "playlist"
+    */
     public void createPlaylist(Playlist playlist) 
     {
         try (Connection con = dbConnector.getConnection()) {
@@ -49,6 +54,7 @@ public class PlaylistDAO
            if (affected<1)
                    throw new SQLException("Can't save playlist");
                    
+           //Gets the auto generated keys in database and sets it for the playlist
                    ResultSet rs = pstmt.getGeneratedKeys();
                    if (rs.next()) {
                        playlist.setID(rs.getInt(1));
@@ -60,7 +66,10 @@ public class PlaylistDAO
         }
     }
     
-
+    /*
+    * Gets all playlists from database table "playlist" with id and names.
+    * Adds each to a list and returns the list
+    */
     public List<Playlist> getAllPlaylists() {
             
             try (Connection con = dbConnector.getConnection()) {
@@ -80,6 +89,9 @@ public class PlaylistDAO
         return allPlaylists;
         }
     
+    /*
+    * Updates the specific values of a playlist in the database by id.
+    */
     public void edit(Playlist playlist) {
         try (Connection con = dbConnector.getConnection()) {
             String sql
@@ -100,6 +112,9 @@ public class PlaylistDAO
         }
     }
     
+    /*
+    * Removes a playlist from the database by getting the selectedPlaylist id.
+    */
     public void remove(Playlist selectedPlaylist) {
         try (Connection con = dbConnector.getConnection()) {
             String sql
@@ -114,6 +129,9 @@ public class PlaylistDAO
         }
     }
 
+    /*
+    * Adds a song into the relations table "playlistSongs" in the database.
+    */
     public void addSongToPlaylist(Playlist playlist, Song song) {
         
                 try (Connection con = dbConnector.getConnection()) {
@@ -137,6 +155,10 @@ public class PlaylistDAO
                 
         
     }
+    
+    /*
+    * Selects all tables in the database and compare id's. 
+    */
     public void getAllSongsFromPlaylist() {
             
         try (Connection con = dbConnector.getConnection()) {
@@ -152,7 +174,9 @@ public class PlaylistDAO
                 song.setName(rs.getString("name"));
                 song.setTrackLenght(rs.getInt("trackLenght"));
                 song.setPath(rs.getString("path"));
-                    
+                
+                // Goes through the list of all playlists and if a id on the list is the same as one in database
+                // it will get the song list from that specific playlist and add the song that is on the database.
                 for (int i = 0; i < allPlaylists.size(); i++) { 
                     if(allPlaylists.get(i).getID() == playlist.getID() ) 
                     {
@@ -169,6 +193,9 @@ public class PlaylistDAO
             
         }
 
+    /*
+    * Deletes a song from a playlist by getting song id and playlist id.
+    */
     public void removeSongPl(Song selectedSong, Playlist selectedPlaylist) {
             try (Connection con = dbConnector.getConnection()) {
             String sql
