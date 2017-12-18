@@ -358,6 +358,7 @@ public class MainViewController implements Initializable {
         Playlist selectedPlaylist = playlistTable.getSelectionModel().getSelectedItem();
         selectedPlaylist.getSongList().add(selectedSong);
         mvm.addSongToPlaylist(selectedPlaylist, selectedSong);
+        playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
     }
 
     /*
@@ -382,6 +383,7 @@ public class MainViewController implements Initializable {
         deleteAlert.showAndWait();
         if (deleteAlert.getResult() == ButtonType.YES) {
             mvm.removeSongPl(selectedSong, selectedPlaylist);
+            playlistSongs.setItems(FXCollections.observableArrayList(playlistTable.getSelectionModel().getSelectedItem().getSongList()));
         } else {
             deleteAlert.close();
         }
