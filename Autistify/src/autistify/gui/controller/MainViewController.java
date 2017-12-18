@@ -9,48 +9,32 @@ import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.bll.SongFilter;
 import autistify.bll.SongManager;
-import autistify.dal.SongDAO;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import com.sun.javafx.collections.ElementObservableListDecorator;
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 /**
@@ -60,17 +44,12 @@ import javafx.stage.Stage;
  */
 public class MainViewController implements Initializable {
 
-    private Song song;
+
     private boolean songOrPsong;
-    private Playlist playlist;
-    private SongDAO sDAO;
-    private MediaPlayer mp;
-    private Media me;
-    private String crntPath;
-    private SongFilter sf;
-    private ObservableList<Song> searchedSongs;
-    private List<Song> songs;
+    private final ObservableList<Song> searchedSongs;
+    private final SongFilter songFilter;
     private MainViewModel mvm;
+    
     @FXML
     private TableView<Song> songTable;
     @FXML
@@ -117,12 +96,15 @@ public class MainViewController implements Initializable {
      * @param url
      * @param rb
      */
+    public MainViewController() {
+        this.searchedSongs = FXCollections.observableArrayList();
+        this.songFilter = new SongFilter();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         try {
             mvm = MainViewModel.getInstance();
-            song =  new Song();
         } catch (IOException ex) {
             Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -153,23 +135,9 @@ public class MainViewController implements Initializable {
                 new PropertyValueFactory("trackLenght"));
         
         mvm.loadSongsInPlaylist();
-        //this.sf = new SongFilter();
-        songTable.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
-        if (newItem != null) {
-            playlistSongs.getSelectionModel().clearSelection();
-            songOrPsong = true;
-            System.out.println(songOrPsong);
-        }
-        });
 
-       playlistSongs.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
-        if (newItem != null) {
-            songTable.getSelectionModel().clearSelection();
-            songOrPsong = false;
-            System.out.println(songOrPsong);
-        }
-        });
-        
+        checkWhichTableIsSelected();
+        searchSong();
     }
 
     @FXML
@@ -310,24 +278,15 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void Search(ActionEvent event) {
-//        txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
-//                -> {
-//            
-//            System.out.println(newQuery);
-//            if (newQuery != null) {
-//            searchedSongs.setAll(sf.search(songs, newQuery));
-//            songTable.setItems(searchedSongs);}
-//        });
-//        System.out.println(txtSearch.getText());
-//
-//        ObservableList<Song> newList = FXCollections.observableArrayList();
-//        newList.addAll(sf.search(songs, txtSearch.getText()));
-//        //searchedSongs.setAll(sf.search(songs, txtSearch.getText()));
-//        songTable.getItems().setAll(newList);
-//
-
+    private void searchSong() {
+        txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
+        -> {
+        searchedSongs.setAll(songFilter.search(mvm.getSongs(), newQuery));
+        songTable.setItems(searchedSongs);
+        });
     }
+
+    
 
     @FXML
     private void vSlider(MouseEvent event) {
@@ -379,25 +338,6 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void SearchType(KeyEvent event)
-    {
-//        String filter = txtSearch.getText();
-//        System.out.println(filter);
-//        
-//        if (filter.equals("")) {
-//            songTable.getItems().setAll(mvm.getSongs());
-//        }
-//        else {
-//        ObservableList<Song> newList = FXCollections.observableArrayList();
-//        newList.addAll(sf.search(songs, txtSearch.getText()));
-//        songTable.getItems().setAll(newList);
-//        }
-        
-        
-        
-    }
-
-    @FXML
     private void removeSongPl(ActionEvent event) {
         Song selectedSong
                 = playlistSongs.getSelectionModel().getSelectedItem();
@@ -419,8 +359,6 @@ public class MainViewController implements Initializable {
                 try {
                     autoPlay();
                 } catch (SQLServerException sQLServerException) {
-//                    exceptionAlert("SQL Server Exception", "There was an issue with the database.",
-//                            Arrays.toString(sQLServerException.getStackTrace()));
                 }
             }
         });
@@ -434,5 +372,23 @@ public class MainViewController implements Initializable {
             Song song = playlistSongs.getSelectionModel().getSelectedItem();
             txtSongPlaying.setText("Current Song - " + playlistSongs.getSelectionModel().getSelectedItem().getName());
             mvm.PlaySong(song);
+    }
+    
+    private void checkWhichTableIsSelected() {
+        songTable.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
+        if (newItem != null) {
+            playlistSongs.getSelectionModel().clearSelection();
+            songOrPsong = true;
+            System.out.println(songOrPsong);
+        }
+        });
+
+       playlistSongs.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
+        if (newItem != null) {
+            songTable.getSelectionModel().clearSelection();
+            songOrPsong = false;
+            System.out.println(songOrPsong);
+        }
+        });
     }
 }

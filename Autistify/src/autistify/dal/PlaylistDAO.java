@@ -7,7 +7,6 @@ package autistify.dal;
 
 import autistify.be.Playlist;
 import autistify.be.Song;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

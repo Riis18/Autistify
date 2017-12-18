@@ -12,7 +12,6 @@ import autistify.bll.SongManager;
 import com.jfoenix.controls.JFXSlider;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.media.MediaPlayer;
@@ -147,14 +146,6 @@ public class MainViewModel {
         sm.setVolume(vSlider);
     }
     
-    public void getOnEndOfMedia() {
-        sm.OnEndOfMedia();
-    }
-//    
-//    public void onEndOfMedia() {
-//        sm.OnEndOfMedia();
-//    }
-
     public MediaPlayer getMediaPlayer() {
         return sm.getMediaPlayer();
     }

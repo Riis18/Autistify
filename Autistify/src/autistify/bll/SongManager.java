@@ -11,17 +11,12 @@ import autistify.dal.SongDAO;
 import com.jfoenix.controls.JFXSlider;
 import java.io.File;
 import java.io.IOException;
-import static java.util.Collections.list;
 import java.util.Iterator;
 import java.util.List;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 /**
  *
@@ -33,8 +28,6 @@ public class SongManager {
     private Playlist playlist;
     private Song songPlaying;
     private MediaPlayer mp;
-    private Media me;
-    private MediaView mv;
     private String crntPath;
     Iterator<String> songIterator;
 
@@ -89,16 +82,6 @@ public class SongManager {
               }
             });
         }
-    
-    public void OnEndOfMedia() {
-        mp.getOnEndOfMedia();
-        
-        }
-    
-//    
-//    public void getOnEndOfMedia () {
-//        mp.getOnEndOfMedia();
-//    }
 
     public MediaPlayer getMediaPlayer() {
         return mp;
