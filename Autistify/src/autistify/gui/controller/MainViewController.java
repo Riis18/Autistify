@@ -87,8 +87,6 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<Song, Integer> psSongTime;
 
-    
-    private SongManager sm;
 
     /**
      * Initializes the controller class.
@@ -183,7 +181,6 @@ public class MainViewController implements Initializable {
                  }
             
         }
-        mvm.loadSongs();
         
     }
  
@@ -277,7 +274,6 @@ public class MainViewController implements Initializable {
         }
     }
 
-    @FXML
     private void searchSong() {
         txtSearch.textProperty().addListener((ObservableValue<? extends String> listener, String oldQuery, String newQuery)
         -> {
@@ -321,6 +317,7 @@ public class MainViewController implements Initializable {
             deleteAlert.close();
         }
         }
+       // mvm.loadPlaylist();
     }
 
     @FXML
@@ -390,5 +387,19 @@ public class MainViewController implements Initializable {
             System.out.println(songOrPsong);
         }
         });
+    }
+
+    @FXML
+    private void renamePlaylist(ActionEvent event) throws IOException {
+        Playlist playlist = playlistTable.getSelectionModel().getSelectedItem();
+        mvm.addSelectedPlaylist(playlist);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/autistify/gui/view/PlaylistView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        PlaylistViewController controller = fxmlLoader.getController();
+        controller.setModel(mvm);
+        Stage stage = new Stage();
+
+        stage.setScene(new Scene(root1));
+        stage.show();
     }
 }

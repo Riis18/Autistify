@@ -19,11 +19,6 @@ public class Song {
        public int trackLenght;
        private int id;
 
-
-    public Song() {
-
-    }
-
     /**
      * Get the value of id
      *

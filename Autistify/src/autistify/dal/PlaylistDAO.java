@@ -84,8 +84,8 @@ public class PlaylistDAO
         try (Connection con = dbConnector.getConnection()) {
             String sql
                     = "UPDATE playlist SET "
-                    + "name=?"
-                    + "WHERE playlistID=?";
+                    + "plName=?"
+                    + " WHERE playlistID=?";
             PreparedStatement pstmt
                     = con.prepareStatement(sql);
             pstmt.setString(1, playlist.getName());
@@ -159,9 +159,10 @@ public class PlaylistDAO
                     allPlaylists.get(i).getSongList().add(song);
                     }
                 }
+                
                     
             }
-                
+               allPlaylists.clear();
             } catch (SQLException ex) {
             Logger.getLogger(PlaylistDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

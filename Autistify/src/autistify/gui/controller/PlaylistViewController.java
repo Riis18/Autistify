@@ -60,7 +60,9 @@ public class PlaylistViewController implements Initializable
             Playlist playlist = new Playlist();
             playlist.setName(txtPL.getText());
             playlist.setID(mvm.getSelectedPlaylist().get(0).getID());
+            mvm.edit(playlist);
             mvm.getSelectedPlaylist().clear();
+            mvm.loadSongsInPlaylist();
             
         } else {
             
@@ -70,7 +72,6 @@ public class PlaylistViewController implements Initializable
             
             mvm.addPlaylist(playlist);
         }
-        
         Stage stage = (Stage) saveBtnPL.getScene().getWindow();
         stage.close();
     }

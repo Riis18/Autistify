@@ -18,7 +18,7 @@ import java.util.List;
 public class PlaylistManager
 {
     
-    private PlaylistDAO pDAO;
+   PlaylistDAO pDAO;
 
     public PlaylistManager() throws IOException {
         this.pDAO = new PlaylistDAO();

@@ -89,7 +89,6 @@ public class MainViewModel {
    {
        pm.add(playlist);
        playlistList.add(playlist);
-       playlistList = FXCollections.observableArrayList(playlist);
    }
    
    public ObservableList<Playlist> getSelectedPlaylist() {
@@ -105,7 +104,9 @@ public class MainViewModel {
    }
    
    public void loadPlaylist() {
+       System.out.println(playlistList);
        playlistList.clear();
+       System.out.println(playlistList);
        playlistList.addAll(pm.getAllPlaylists());
    }
    

@@ -34,21 +34,4 @@ public class SongFilter
         }
         return result;
     }
-//    public List<Song> search(List<Song> songs, String searchQuery)
-//    {
-//        List<Song> result = FXCollections.observableArrayList();
-//        
-//        for (Song song : songs)
-//        {
-//            String name = song.getName().trim().toLowerCase();
-//            String artist = song.getArtist().trim().toLowerCase();
-//            
-//            if (name.contains(searchQuery.toLowerCase().trim()) || artist.contains(searchQuery.toLowerCase().trim()))
-//            {
-//                result.add(song);
-//            }
-//        }
-//        
-//        return result;
-//    }
 }

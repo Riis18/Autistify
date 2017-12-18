@@ -25,15 +25,11 @@ import javafx.scene.media.MediaPlayer;
 public class SongManager {
     
     SongDAO sdao;
-    private Playlist playlist;
-    private Song songPlaying;
     private MediaPlayer mp;
     private String crntPath;
-    Iterator<String> songIterator;
 
     public SongManager() throws IOException {
         this.sdao = new SongDAO();
-        Playlist playlist = new Playlist();
     }
     
     public List<Song> getAllSongs() {
