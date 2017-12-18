@@ -8,7 +8,6 @@ package autistify.gui.controller;
 import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.bll.SongFilter;
-import autistify.bll.SongManager;
 import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;

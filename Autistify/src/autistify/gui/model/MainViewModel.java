@@ -11,7 +11,6 @@ import autistify.bll.PlaylistManager;
 import autistify.bll.SongManager;
 import com.jfoenix.controls.JFXSlider;
 import java.io.IOException;
-import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.media.MediaPlayer;

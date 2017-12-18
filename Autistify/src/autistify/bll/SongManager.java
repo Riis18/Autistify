@@ -5,13 +5,11 @@
  */
 package autistify.bll;
 
-import autistify.be.Playlist;
 import autistify.be.Song;
 import autistify.dal.SongDAO;
 import com.jfoenix.controls.JFXSlider;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
