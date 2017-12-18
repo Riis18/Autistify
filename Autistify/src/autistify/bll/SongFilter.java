@@ -6,12 +6,8 @@
 package autistify.bll;
 
 import autistify.be.Song;
-import autistify.dal.SongDAO;
-import autistify.gui.model.MainViewModel;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -20,24 +16,24 @@ import javafx.collections.ObservableList;
 public class SongFilter
 {
     
-    private MainViewModel mvm;
-    private SongDAO sDAO;
-    
-    public List<Song> search(List<Song> songs, String searchQuery)
-    {
-        List<Song> result = FXCollections.observableArrayList();
+
+    /*
+    * A filter that searches for song by making a new list
+    */
+    public ArrayList<Song> search(List<Song> songs, String searchQuery) {
+        ArrayList<Song> result = new ArrayList<>();
         
-        for (Song song : songs)
-        {
-            String name = song.getName().trim().toLowerCase();
+        for (Song song : songs) {
+            String title = song.getName().trim().toLowerCase();
             String artist = song.getArtist().trim().toLowerCase();
             
-            if (name.contains(searchQuery.toLowerCase().trim()) || artist.contains(searchQuery.toLowerCase().trim()))
-            {
+            if(title.contains(searchQuery.toLowerCase().trim())
+                    || artist.contains(searchQuery.toLowerCase().trim())
+                    && !result.contains(song)) {
                 result.add(song);
             }
+            
         }
-        
         return result;
     }
 }

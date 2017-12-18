@@ -18,6 +18,9 @@ public class DataBaseConnector {
     
     private SQLServerDataSource dataSource;
 
+    /*
+    * sets the database sources.
+    */
     public DataBaseConnector() throws IOException
     {
         dataSource = new SQLServerDataSource();
@@ -29,6 +32,9 @@ public class DataBaseConnector {
         dataSource.setPassword("Bjoernhart1234");
     }
     
+    /*
+    * gets the connection to the database
+    */
     public Connection getConnection() throws SQLServerException
     {
         return dataSource.getConnection();

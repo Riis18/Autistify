@@ -25,11 +25,16 @@ public class SongDAO {
     
     private DataBaseConnector dbConnector;
     
-    
+    /*
+    * Constructor for SongDAO
+    */
     public SongDAO() throws IOException {
         dbConnector = new DataBaseConnector();
     }
     
+    /*
+    * Inserts the values of a song into the database table "song"
+    */
     public void createSong(Song song) {
         try (Connection con = dbConnector.getConnection()) {
             String sql = "INSERT INTO song"
@@ -48,7 +53,7 @@ public class SongDAO {
             if(affected<1)
                 throw new SQLException("Can't save song");
             
-            //Get Database generated id
+            //Get Database generated id and set song id
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 song.setId(rs.getInt(1));
@@ -62,6 +67,9 @@ public class SongDAO {
 
     }
     
+    /*
+    * Gets all songs from database table "song" and puts them in a list
+    */
     public List<Song> getAllSongs() {
         List<Song> allSongs = new ArrayList();
         
@@ -87,6 +95,9 @@ public class SongDAO {
         return allSongs;
     }
     
+    /*
+    * deletes a song from database table "song" by id
+    */
     public void remove(Song selectedSong) {
         try (Connection con = dbConnector.getConnection()) {
             String sql
@@ -100,6 +111,9 @@ public class SongDAO {
         }
     }
     
+    /*
+    * Updates a song in the database table "song" by id
+    */
     public void edit(Song song) {
         try (Connection con = dbConnector.getConnection()) {
             String sql

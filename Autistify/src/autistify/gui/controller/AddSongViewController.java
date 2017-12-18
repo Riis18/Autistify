@@ -31,8 +31,6 @@ import org.jaudiotagger.tag.Tag;
  * @author Jesper Riis
  */
 public class AddSongViewController implements Initializable {
-
-    private Song song;
     private MainViewModel mvm;
     
     @FXML
@@ -75,6 +73,9 @@ public class AddSongViewController implements Initializable {
 
     }    
 
+    /*
+    * Edits an existing song or saves a new song to the database
+    */
     @FXML
     private void saveSong(ActionEvent event) {
         
@@ -107,6 +108,9 @@ public class AddSongViewController implements Initializable {
         stage.close();
     }
 
+    /*
+    * Closes the add song view
+    */
     @FXML
     private void cancelAddSongView(ActionEvent event) {
         
@@ -117,6 +121,10 @@ public class AddSongViewController implements Initializable {
         
     }
 
+    /*
+    * Lets you choose a file on local computer and if there is metadata on
+    * that file it will read it and put it in textfields.
+    */
     @FXML
     public void chooseFile(ActionEvent event) {
         
@@ -142,6 +150,9 @@ public class AddSongViewController implements Initializable {
 
     }
     
+    /*
+    * sets the model to MainViewModel
+    */
     public void setModel(MainViewModel model) {
         this.mvm = model;
     }
