@@ -14,6 +14,7 @@ import autistify.gui.model.MainViewModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sun.javafx.collections.ElementObservableListDecorator;
 import java.io.File;
 import java.net.URL;
@@ -23,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -167,6 +169,7 @@ public class MainViewController implements Initializable {
             System.out.println(songOrPsong);
         }
         });
+        
     }
 
     @FXML
@@ -259,12 +262,15 @@ public class MainViewController implements Initializable {
             mvm.PlaySong(songPlaying);
             playPause.setText("Pause");
             txtSongPlaying.setText("Current Song - " + playlistSongs.getSelectionModel().getSelectedItem().getName());
+            
         } else {
             playPause.setText("Play");
             mvm.setVolume(vSlider);
             mvm.pauseSong(songPlaying);
         }
+        
         }
+        setOnMediaEnd();
     }
     
     @FXML
@@ -405,5 +411,28 @@ public class MainViewController implements Initializable {
             deleteAlert.close();
         }
     }
-
+    
+    public void setOnMediaEnd() {
+        mvm.getMediaPlayer().setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    autoPlay();
+                } catch (SQLServerException sQLServerException) {
+//                    exceptionAlert("SQL Server Exception", "There was an issue with the database.",
+//                            Arrays.toString(sQLServerException.getStackTrace()));
+                }
+            }
+        });
+}
+    private void autoPlay() throws SQLServerException {
+            int listSize = mvm.getSongs().size() -1;
+            if(listSize == playlistSongs.getSelectionModel().getSelectedIndex()) {
+                mvm.setListEnded(true);
+             }
+            playlistSongs.getSelectionModel().selectNext();
+            Song song = playlistSongs.getSelectionModel().getSelectedItem();
+            txtSongPlaying.setText("Current Song - " + playlistSongs.getSelectionModel().getSelectedItem().getName());
+            mvm.PlaySong(song);
+    }
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -30,6 +31,7 @@ public class MainViewModel {
     public ObservableList<Playlist> playlistList;
     public ObservableList<Playlist> selectedPlaylist;
     public ObservableList<Playlist> playlists;
+    private boolean listEnded;
 
     public MainViewModel() throws IOException {
         this.sm = new SongManager();
@@ -143,6 +145,26 @@ public class MainViewModel {
 
     public void setVolume(JFXSlider vSlider) {
         sm.setVolume(vSlider);
+    }
+    
+    public void getOnEndOfMedia() {
+        sm.OnEndOfMedia();
+    }
+//    
+//    public void onEndOfMedia() {
+//        sm.OnEndOfMedia();
+//    }
+
+    public MediaPlayer getMediaPlayer() {
+        return sm.getMediaPlayer();
+    }
+    
+    public boolean listEnded() {
+        return listEnded;
+    }
+
+    public void setListEnded(boolean listEnded) {
+        this.listEnded = listEnded;
     }
     
    
